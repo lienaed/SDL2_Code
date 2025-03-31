@@ -55,7 +55,7 @@ void Game::init (const char* title, int x, int y, int width, int height, bool fu
     //Load Image
     player = new GameObject ("assets/knight.png", 1, 1);
 
-    //Get window Size
+    //Get window Size 
     SDL_GetWindowSize (window, &winW, &winH);
 
     //Initialize Map
