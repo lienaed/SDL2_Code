@@ -29,7 +29,7 @@ constexpr std::size_t maxComponents = 32;
 using ComponentBitSet = std::bitset<maxComponents>;
 using ComponentArray = std::array<Component*, maxComponents>;
 
-class Component()
+class Component
 {
     public:
         Entity* entity;
@@ -40,7 +40,7 @@ class Component()
         virtual void ~Component(){}
 };
 
-class Entity()
+class Entity
 {
     public:
         void update()
