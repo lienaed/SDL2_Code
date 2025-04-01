@@ -1,21 +1,20 @@
-#include "frame.hpp"
+#include "Frame.hpp"
 
-SDL_Renderer* renderer;
+SDL_Renderer* Frame::renderer = nullptr;
+Frame::Frame(){}
+Frame::~Frame(){}
 
-frame::frame(){}
-frame::~frame(){}
-
-void frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
+void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 {
     //Fullscreen detect
-    int flag == 0;
+    int flag = 0;
     if (fullscreen)
         flag = SDL_WINDOW_FULLSCREEN;
 
     if (SDL_Init (SDL_INIT_EVERYTHING) == 0)
     {
         //Create window
-        std::cout << "Subsystem Initialized." << std::endl;
+        std::cout << "Subsystem initialized." << std::endl;
         window = SDL_CreateWindow (title, x, y, w, h, flag);
         if (window)
             std::cout << "Window created." << std::endl;
@@ -33,21 +32,44 @@ void frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 
     }
     else
+    {
+        std::cout << "Subsystem initializing failed." << std::endl;
         running = 0;
+    }
+
 }
 
-void frame::update()
+//Event
+void Frame::event()
 {
+    SDL_Event event;
+    SDL_PollEvent (&event);
+    switch (event.type)
+    {
+        case SDL_QUIT:
+            running = 0;
+            break;
 
+        default:
+            break;
+    }
 }
 
-void frame::draw()
+//Update
+void Frame::update()
+{
+    SDL_SetRenderDrawColor (renderer, 63, 83, 143, 255);
+}
+
+//Render
+void Frame::render()
 {
     SDL_RenderClear (renderer);
     SDL_RenderPresent (renderer);
 }
 
-bool frame::state()
+//State
+bool Frame::state()
 {
     return running;
 }

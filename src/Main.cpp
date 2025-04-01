@@ -1,24 +1,32 @@
 #include <iostream>
-#include <frame.hpp>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include "Frame.hpp"
+
+Frame* game = nullptr;
 
 int main ()
 {
     const int FPS = 60;
-    const int frameDelay = 1 / FPS;
-    uint32_t frameStart;
+    const int FrameDelay = 1 / FPS;
+    uint32_t FrameStart;
+
+    game = new Frame();
+    game -> init("Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, 0);
 
     while (game -> state())
     {
-        frameStart = SDL_GetTicks();
+        FrameStart = SDL_GetTicks();
 
+        game -> event();
+        game -> update();
+        game -> render(); 
 
-
-        frameStart = SDL_GetTicks() - frameStart;
-        if (frameStart < frameDelay)
-            SDL_Delay (frameDelay - frameStart);
-        else
-            std::cout << "Low Frame" << std::endl;
-
+        FrameStart = SDL_GetTicks() - FrameStart;
+        if (FrameStart < FrameDelay)
+            SDL_Delay (FrameDelay - FrameStart);
+        //else
+            //std::cout << "Low Frame" << std::endl;
     }
 
     return 0;

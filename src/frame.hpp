@@ -3,20 +3,21 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
-class frame
+class Frame
 {
     public:
-        frame();
-        ~frame();
+        Frame();
+        ~Frame();
         void init(const char* title, int x, int y, int w, int h, bool fullscreen);
         void update();
-        void draw();
+        void render();
         bool state();
         void event();
-        void clean();
+        void clear();
 
+        static SDL_Renderer* renderer;
 
     private:
-        bool running;
-        SDL_Window* window;
-}
+        bool running = 1;
+        SDL_Window *window;
+};
