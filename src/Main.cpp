@@ -28,6 +28,6 @@ int main ()
         //else
             //std::cout << "Low Frame" << std::endl;
     }
-
+    game -> clear();
     return 0;
 }

@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
+#include <vector>
 
 class Frame
 {
@@ -20,4 +21,6 @@ class Frame
     private:
         bool running = 1;
         SDL_Window *window;
+        SDL_Rect src, dest;
+        SDL_Texture* Knight;
 };

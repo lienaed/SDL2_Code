@@ -1,8 +1,35 @@
 #include "Frame.hpp"
+#include "TextureManager.hpp"
+#include "Map.hpp"
 
 SDL_Renderer* Frame::renderer = nullptr;
+Map* level1 = new Map();
+
 Frame::Frame(){}
 Frame::~Frame(){}
+int map1[20][25] = 
+{
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+    2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+};
 
 void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 {
@@ -28,9 +55,13 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
         else
                 std::cout << "Renderer creating failed." << std::endl;
         running = 1;
+
         //Other initialization
+        Knight = TextureManager::LoadTexture ("assets/Knight.png");
+        level1 -> init (map1);
 
     }
+
     else
     {
         std::cout << "Subsystem initializing failed." << std::endl;
@@ -59,12 +90,21 @@ void Frame::event()
 void Frame::update()
 {
     SDL_SetRenderDrawColor (renderer, 63, 83, 143, 255);
+    //object
+    src.x = src.y = 0;
+    src.w = src.h = 25;
+    dest.w = dest.h = 64;
+    //End object
 }
 
 //Render
 void Frame::render()
 {
     SDL_RenderClear (renderer);
+    level1 -> draw();
+    //object
+    TextureManager::draw (Knight, src, dest);
+
     SDL_RenderPresent (renderer);
 }
 
@@ -72,4 +112,11 @@ void Frame::render()
 bool Frame::state()
 {
     return running;
+}
+
+void Frame::clear()
+{
+    SDL_DestroyRenderer(renderer); 
+    SDL_DestroyWindow(window);
+    SDL_Quit();
 }
