@@ -105,7 +105,7 @@ void Frame::render()
     //object
     TextureManager::draw (Knight, src, dest);
 
-    SDL_RenderPresent (renderer);
+    SDL_RenderPresent (renderer); 
 }
 
 //State
