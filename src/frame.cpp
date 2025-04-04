@@ -1,11 +1,12 @@
 #include "Frame.hpp"
 #include "TextureManager.hpp"
 #include "Map.hpp"
-#include ""
+#include "OOP/GameObject.hpp"
+#include "OOP/Player.hpp"
 
 SDL_Renderer* Frame::renderer = nullptr;
 Map* level1 = new Map();
-
+std::vector <GameObject*> gameObjects;
 
 Frame::Frame(){}
 Frame::~Frame(){}
@@ -60,7 +61,7 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 
         //Other initialization
         level1 -> init (map1);
-
+        gameObjects.emplace_back (new Player ("assets/Knight.png", 0, 32*9));
     }
 
     else
@@ -91,6 +92,8 @@ void Frame::event()
 void Frame::update()
 {
     SDL_SetRenderDrawColor (renderer, 63, 83, 143, 255);
+    for (auto o : gameObjects)
+        o -> update();
 }
 
 //Render
@@ -98,6 +101,8 @@ void Frame::render()
 {
     SDL_RenderClear (renderer);
     level1 -> draw();
+    for (auto o : gameObjects)
+        o -> draw();
 
     SDL_RenderPresent (renderer); 
 }

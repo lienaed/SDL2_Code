@@ -1,18 +1,24 @@
 #include "GameObject.hpp"
+#include "../TextureManager.hpp"
 
-void GameObject::Gameobject(const char* file, int xpos, int ypos)
+GameObject::GameObject(const char* file, int xpos, int ypos)
 {
     texture = TextureManager::LoadTexture (file);
-    x = xpos;
-    y = ypos;
     srcRect.x = srcRect.y = 0;
     srcRect.w = srcRect.h = 25;
     destRect.w = destRect.h = 64;
+    destRect.x = xpos;
+    destRect.y = ypos;
 }
 
-void GameObject::render()
+void GameObject::update()
 {
-    SDL_RenderCopy (Frame::renderer, texture, &srcRect, &destRect);
+
+}
+
+void GameObject::draw()
+{
+    TextureManager::draw (texture, srcRect, destRect);
 }
 
 GameObject::~GameObject() {
