@@ -22,5 +22,4 @@ class Frame
         bool running = 1;
         SDL_Window *window;
         SDL_Rect src, dest;
-        SDL_Texture* Knight;
 };

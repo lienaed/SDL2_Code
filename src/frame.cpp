@@ -1,9 +1,11 @@
 #include "Frame.hpp"
 #include "TextureManager.hpp"
 #include "Map.hpp"
+#include ""
 
 SDL_Renderer* Frame::renderer = nullptr;
 Map* level1 = new Map();
+
 
 Frame::Frame(){}
 Frame::~Frame(){}
@@ -57,7 +59,6 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
         running = 1;
 
         //Other initialization
-        Knight = TextureManager::LoadTexture ("assets/Knight.png");
         level1 -> init (map1);
 
     }
@@ -90,11 +91,6 @@ void Frame::event()
 void Frame::update()
 {
     SDL_SetRenderDrawColor (renderer, 63, 83, 143, 255);
-    //object
-    src.x = src.y = 0;
-    src.w = src.h = 25;
-    dest.w = dest.h = 64;
-    //End object
 }
 
 //Render
@@ -102,8 +98,6 @@ void Frame::render()
 {
     SDL_RenderClear (renderer);
     level1 -> draw();
-    //object
-    TextureManager::draw (Knight, src, dest);
 
     SDL_RenderPresent (renderer); 
 }
