@@ -76,16 +76,20 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 void Frame::event()
 {
     SDL_Event event;
-    SDL_PollEvent (&event);
-    switch (event.type)
-    {
-        case SDL_QUIT:
-            running = 0;
-            break;
 
-        default:
-            break;
+    while (SDL_PollEvent (&event))
+    {
+        switch (event.type)
+        {
+            case SDL_QUIT:
+                running = 0;
+                break;
+
+            default:
+                break;
+        }
     }
+
 }
 
 //Update
