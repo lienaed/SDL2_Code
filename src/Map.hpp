@@ -1,4 +1,5 @@
 #include "Frame.hpp"
+#include "TextureManager.hpp"
 
 class Map
 {

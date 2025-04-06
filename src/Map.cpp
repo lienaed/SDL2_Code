@@ -1,5 +1,4 @@
 #include "Map.hpp"
-#include "TextureManager.hpp"
 
 void Map::init(int arr[20][25])
 {
