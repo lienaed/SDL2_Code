@@ -1,5 +1,6 @@
-#include "Frame.hpp"
+#include "frame.hpp"
 #include "Map.hpp"
+#include "TextureManager.hpp"
 #include "OOP/GameObject.hpp"
 #include "OOP/Player.hpp"
 

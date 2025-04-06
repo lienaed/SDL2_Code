@@ -1,5 +1,5 @@
-#include "Frame.hpp"
-#include "TextureManager.hpp"
+#pragma once
+#include "frame.hpp"
 
 class Map
 {

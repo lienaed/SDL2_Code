@@ -1,7 +1,4 @@
-#include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include "Frame.hpp"
+#include "frame.hpp"
 #undef main
 
 Frame* game = nullptr;

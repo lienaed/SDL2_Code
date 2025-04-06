@@ -1,6 +1,5 @@
 #pragma once
-#include "../Frame.hpp"
-#include "../TextureManager.hpp"
+#include "../frame.hpp"
 
 class GameObject
 {

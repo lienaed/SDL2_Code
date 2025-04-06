@@ -1,4 +1,5 @@
-#include "Frame.hpp"
+#pragma once
+#include "frame.hpp"
 
 class TextureManager
 {

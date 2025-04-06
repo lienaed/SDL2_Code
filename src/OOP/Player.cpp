@@ -1,6 +1,6 @@
 #include "Player.hpp"
 
-Player::update()
+void Player::update()
 {
     if (space)
     {
@@ -9,7 +9,7 @@ Player::update()
     }
 }
 
-Player::handelEvent(SDL_Scancode input)
+void Player::handelEvent(SDL_Scancode input)
 {
     space = 1;
  }

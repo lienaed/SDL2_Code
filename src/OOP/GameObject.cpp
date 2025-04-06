@@ -1,5 +1,5 @@
 #include "GameObject.hpp"
-
+#include "../TextureManager.hpp"
 
 GameObject::GameObject(const char* file, int xpos, int ypos)
 {
