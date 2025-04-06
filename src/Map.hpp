@@ -4,7 +4,7 @@ class Map
 {
     public:
         void init (int arr[20][25]);
-        void addChunk (const char* file);
+        void addChunk (const char* file, int num);
         void draw();
     
     private:

@@ -3,9 +3,12 @@
 
 void Map::init(int arr[20][25])
 {
-    Map::addChunk ("assets/Water.png");
-    Map::addChunk ("assets/Dirt.png");
-    Map::addChunk ("assets/Grass.png");
+    chunks.resize (100);
+    Map::addChunk ("assets/Sky.png", 0);
+    Map::addChunk ("assets/Dirt.png", 1);
+    Map::addChunk ("assets/Grass.png", 2);
+    Map::addChunk ("assets/Water.png", 3);
+    
     src.x = src.y = 0;
     src.w = src.h = 25;
     dest.w = dest.h = 32;
@@ -19,9 +22,9 @@ void Map::init(int arr[20][25])
     }
 }
 
-void Map::addChunk (const char* file)
+void Map::addChunk (const char* file, int num)
 {
-    chunks.emplace_back (TextureManager::LoadTexture (file));
+    chunks[num] = TextureManager::LoadTexture (file);
 }
 
 void Map::draw()
