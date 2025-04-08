@@ -10,6 +10,7 @@ Map* level1 = new Map();
 std::vector <GameObject*> gameObjects;
 Player* Knight = nullptr;
 
+
 Frame::Frame(){}
 Frame::~Frame(){}
 
@@ -89,6 +90,7 @@ void Frame::event()
                 running = 0;
                 break;
             case SDL_KEYDOWN:
+                
                 switch (event.key.keysym.scancode)
                 {
                     case SDL_SCANCODE_ESCAPE:
