@@ -1,5 +1,5 @@
 #pragma once
-#include "frame.hpp"
+#include "Frame.hpp"
 
 class Map
 {

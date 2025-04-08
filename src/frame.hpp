@@ -17,9 +17,11 @@ class Frame
         void clear();
 
         static SDL_Renderer* renderer;
+        static int winW, winH;
 
     private:
         bool running = 1;
         SDL_Window *window;
+        
         SDL_Rect src, dest;
 };

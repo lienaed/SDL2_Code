@@ -13,7 +13,7 @@ SDL_Texture* TextureManager::LoadTexture(const char* file)
     return tex;
 }
 
-void TextureManager::draw (SDL_Texture* tex, SDL_Rect srcR, SDL_Rect destR)
+void TextureManager::draw (SDL_Texture* texture, SDL_Rect srcR, SDL_Rect destR)
 {
-    SDL_RenderCopy (Frame::renderer, tex, &srcR, &destR);
+    SDL_RenderCopy (Frame::renderer, texture, &srcR, &destR);
 } 

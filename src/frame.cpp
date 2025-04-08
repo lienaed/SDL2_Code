@@ -1,4 +1,4 @@
-#include "frame.hpp"
+#include "Frame.hpp"
 #include "Map.hpp"
 #include "TextureManager.hpp"
 #include "OOP/GameObject.hpp"
@@ -9,6 +9,8 @@ Map* level1 = new Map();
 
 std::vector <GameObject*> gameObjects;
 Player* Knight = nullptr;
+
+int Frame::winW = 0, Frame::winH = 0;
 
 
 Frame::Frame(){}
@@ -65,8 +67,10 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 
         //Other initialization
         level1 -> init (map1);
-        Knight = new Player ("assets/Knight.png", 0, 32*9);
+        Knight = new Player ("assets/Knight.png", 0, 32*9, 64, 64);
         gameObjects.emplace_back (Knight);
+
+        SDL_GetWindowSize (window, &winW, &winH);
     }
 
     else
@@ -90,19 +94,9 @@ void Frame::event()
                 running = 0;
                 break;
             case SDL_KEYDOWN:
-                
-                switch (event.key.keysym.scancode)
+                if (!event.key.repeat)
                 {
-                    case SDL_SCANCODE_ESCAPE:
-                        running = 0;
-                        break;
-                    
-                    case SDL_SCANCODE_SPACE:
-                        Knight -> handelEvent (event.key.keysym.scancode);
-                        break;
-
-                    default:
-                        break;
+                    Knight -> handelEvent (event.key.keysym.scancode);
                 }
                 break;
 
@@ -116,7 +110,6 @@ void Frame::event()
 //Update
 void Frame::update()
 {
-    SDL_SetRenderDrawColor (renderer, 63, 83, 143, 255);
     for (auto o : gameObjects)
         o -> update();
 }

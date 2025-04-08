@@ -1,26 +1,27 @@
-#include "GameObject.hpp"
+   #include "GameObject.hpp"
 #include "../TextureManager.hpp"
 
-GameObject::GameObject(const char* file, int xpos, int ypos)
+GameObject::GameObject(const char* file, int xpos, int ypos, int destW, int destH)
 {
     texture = TextureManager::LoadTexture (file);
+    
     srcRect.x = srcRect.y = 0;
     srcRect.w = srcRect.h = 25;
-    destRect.w = destRect.h = 64;
+    destRect.w = destW;
+    destRect.h = destH;
     destRect.x = xpos;
     destRect.y = ypos;
 }
 
 void GameObject::update()
-{
-
-}
+{}
 
 void GameObject::draw()
 {
     TextureManager::draw (texture, srcRect, destRect);
 }
 
-GameObject::~GameObject() {
+GameObject::~GameObject() 
+{
     SDL_DestroyTexture(texture);
 }

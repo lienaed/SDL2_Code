@@ -3,13 +3,29 @@
 void Player::update()
 {
     if (space)
-    {
-        destRect.y -= 5;
-        space = 0;
-    }
+        jump();
+    
+    gravity();
+    if (destRect.y > Frame::winH - destRect.h)
+        destRect.y = Frame::winH - objH;
 }
 
 void Player::handelEvent(SDL_Scancode input)
 {
-    space = 1;
- }
+    if (input == SDL_SCANCODE_SPACE)
+        space = 1;
+}
+
+void Player::jump()
+{
+    if (destRect.y == Frame::winH - objH)
+        vY = 5;
+
+    space = 0;
+}
+
+void Player::gravity()
+{
+    vY -= G;
+    destRect.y -= vY;
+}
