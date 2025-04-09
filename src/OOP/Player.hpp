@@ -5,8 +5,9 @@ class Player : public GameObject
 {
     private:
         bool space = 0;
-        double vY = 5;
-        double vX = 1;
+        
+        double vY = 7;
+        double vX = 2.5;
         int objH, objW;
 
     public:
@@ -20,4 +21,6 @@ class Player : public GameObject
         void handelEvent(SDL_Scancode input);
         void jump();
         void gravity();
+        void moveRight();
+        void moveLeft();
 };

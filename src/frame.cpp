@@ -15,34 +15,10 @@ Enimy* Shell = nullptr;
 
 int Frame::winW = 0, Frame::winH = 0;
 
-
 Frame::Frame(){}
 Frame::~Frame(){}
 
-int map1[20][25] = 
-{
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-    2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-};
-
+//Initialization
 void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 {
     //Fullscreen detect
@@ -68,10 +44,10 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
             std::cout << "Renderer creating failed." << std::endl;
         running = 1;
 
-        //Other initialization
         SDL_GetWindowSize (window, &winW, &winH);
 
-        level1 -> init (map1);
+        //Other initialization
+        level1 -> init ("assets/Maps/Level1.json");
         Knight = new Player ("assets/Knight.png", 0, winH, 64, 64);
         gameObjects.emplace_back (Knight);
         Shell = new Enimy ("assets/Shell.png", 300, winH, 64, 64);
@@ -94,6 +70,8 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 void Frame::event()
 {
     InputManager::update();
+    
+    running = InputManager::keyDown (SDL_SCANCODE_ESCAPE) ? 0 : 1;
 
     SDL_Event event;
     while (SDL_PollEvent (&event))
@@ -108,6 +86,7 @@ void Frame::event()
                 break;
         }
     }
+
 }
 
 //Update

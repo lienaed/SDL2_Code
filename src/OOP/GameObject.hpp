@@ -7,9 +7,9 @@ class GameObject
     protected:
         SDL_Texture* texture;
         SDL_Rect srcRect, destRect;
-        const double G = 0.2;
+        const double G = 0.3;
 
-    public:    
+    public:
         GameObject(const char* file, int xpos, int ypos, int destW, int destH);
         virtual void update();
         virtual void draw();
