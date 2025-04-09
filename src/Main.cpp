@@ -18,7 +18,6 @@ int main ()
     while (game -> state())
     {
         FrameStart = SDL_GetTicks();
-
         game -> event();
         game -> update();
         game -> render(); 
@@ -30,7 +29,7 @@ int main ()
         else
             std::cout << "Low Frame" << std::endl;
     }
-    
+    std::cout << "Clearing" << std::endl;
     game -> clear();
     return 0;
 }

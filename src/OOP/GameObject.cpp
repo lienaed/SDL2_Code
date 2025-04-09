@@ -1,12 +1,13 @@
-   #include "GameObject.hpp"
+#include "GameObject.hpp"
 #include "../TextureManager.hpp"
+
 
 GameObject::GameObject(const char* file, int xpos, int ypos, int destW, int destH)
 {
     texture = TextureManager::LoadTexture (file);
     
     srcRect.x = srcRect.y = 0;
-    srcRect.w = srcRect.h = 25;
+    srcRect.w = srcRect.h = 32;
     destRect.w = destW;
     destRect.h = destH;
     destRect.x = xpos;

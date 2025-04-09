@@ -2,18 +2,10 @@
 
 void Player::update()
 {
-    if (space)
+    if (InputManager::keyPress (SDL_SCANCODE_SPACE))
         jump();
     
     gravity();
-    if (destRect.y > Frame::winH - destRect.h)
-        destRect.y = Frame::winH - objH;
-}
-
-void Player::handelEvent(SDL_Scancode input)
-{
-    if (input == SDL_SCANCODE_SPACE)
-        space = 1;
 }
 
 void Player::jump()
@@ -28,4 +20,6 @@ void Player::gravity()
 {
     vY -= G;
     destRect.y -= vY;
+    if (destRect.y > Frame::winH - destRect.h)
+        destRect.y = Frame::winH - objH;
 }

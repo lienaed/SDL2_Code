@@ -1,12 +1,14 @@
+#pragma once
 #include "GameObject.hpp"
 
-class Enimy
+class Enimy : public GameObject
 {
     private:
         int objW, objH;
-        int dir = 0;
+        bool dir = 0;
         double vY = 0;
         double vX = 1;
+        int counter = 0;
 
     public:
         Enimy (const char* file, int xpos, int ypos, int destW, int destH) 

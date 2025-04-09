@@ -1,14 +1,17 @@
 #include "Frame.hpp"
 #include "Map.hpp"
 #include "TextureManager.hpp"
+#include "InputManager.hpp"
 #include "OOP/GameObject.hpp"
 #include "OOP/Player.hpp"
+#include "OOP/Enimy.hpp"
 
 SDL_Renderer* Frame::renderer = nullptr;
 Map* level1 = new Map();
 
 std::vector <GameObject*> gameObjects;
 Player* Knight = nullptr;
+Enimy* Shell = nullptr;
 
 int Frame::winW = 0, Frame::winH = 0;
 
@@ -66,11 +69,17 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
         running = 1;
 
         //Other initialization
-        level1 -> init (map1);
-        Knight = new Player ("assets/Knight.png", 0, 32*9, 64, 64);
-        gameObjects.emplace_back (Knight);
-
         SDL_GetWindowSize (window, &winW, &winH);
+
+        level1 -> init (map1);
+        Knight = new Player ("assets/Knight.png", 0, winH, 64, 64);
+        gameObjects.emplace_back (Knight);
+        Shell = new Enimy ("assets/Shell.png", 300, winH, 64, 64);
+        gameObjects.emplace_back (Shell);
+
+        //Clear event
+        SDL_Event dump;
+        while (SDL_PollEvent (&dump)){}
     }
 
     else
@@ -85,7 +94,6 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 void Frame::event()
 {
     SDL_Event event;
-
     while (SDL_PollEvent (&event))
     {
         switch (event.type)
@@ -93,25 +101,21 @@ void Frame::event()
             case SDL_QUIT:
                 running = 0;
                 break;
-            case SDL_KEYDOWN:
-                if (!event.key.repeat)
-                {
-                    Knight -> handelEvent (event.key.keysym.scancode);
-                }
-                break;
 
             default:
                 break;
         }
     }
-
 }
 
 //Update
 void Frame::update()
 {
+    std::cout << "run tick, " << running << std::endl;
     for (auto o : gameObjects)
         o -> update();
+    
+    InputManager::flush();
 }
 
 //Render
