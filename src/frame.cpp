@@ -93,6 +93,8 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 //Event
 void Frame::event()
 {
+    InputManager::update();
+
     SDL_Event event;
     while (SDL_PollEvent (&event))
     {
@@ -111,7 +113,6 @@ void Frame::event()
 //Update
 void Frame::update()
 {
-    std::cout << "run tick, " << running << std::endl;
     for (auto o : gameObjects)
         o -> update();
     
