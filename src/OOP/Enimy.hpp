@@ -4,8 +4,8 @@ class Enimy
 {
     private:
         int objW, objH;
-        int dir = 0;        
-        double vY = 5;
+        int dir = 0;
+        double vY = 0;
         double vX = 1;
 
     public:

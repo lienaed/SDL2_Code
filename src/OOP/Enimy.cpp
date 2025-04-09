@@ -5,9 +5,15 @@ void Enimy::update()
     if (dir)
     {
         
-        
-        gravity();
-        if (destRect.y > Frame::winH - destRect.h)
-            destRect.y = Frame::winH - objH;
     }
+        
+    gravity();
+    if (destRect.y > Frame::winH - destRect.h)
+        destRect.y = Frame::winH - objH;
+}
+
+void Enimy::gravity()
+{
+    vY -= G;
+    destRect.y -= vY;
 }
