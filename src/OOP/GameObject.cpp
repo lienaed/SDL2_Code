@@ -2,7 +2,7 @@
 #include "../TextureManager.hpp"
 
 
-GameObject::GameObject(const char* file, int xpos, int ypos, int destW, int destH)
+GameObject::GameObject(const std::string& name, const std::string& tag, const char* file, int xpos, int ypos, int destW, int destH)
 {
     texture = TextureManager::LoadTexture (file);
     
@@ -12,6 +12,8 @@ GameObject::GameObject(const char* file, int xpos, int ypos, int destW, int dest
     destRect.h = destH;
     destRect.x = xpos;
     destRect.y = ypos;
+    posX = destRect.x;
+    posY = destRect.y;
 }
 
 void GameObject::update()

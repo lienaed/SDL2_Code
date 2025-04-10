@@ -12,11 +12,14 @@ void Player::update()
         moveLeft();
     
     gravity();
+
+    destRect.x = static_cast <int> (posX);
+    destRect.y = static_cast <int> (posY);
 }
 
 void Player::jump()
 {
-    if (destRect.y == Frame::winH - objH)
+    if (posY == Frame::winH - destRect.h)
         vY = 5;
 
     space = 0;
@@ -25,17 +28,17 @@ void Player::jump()
 void Player::gravity()
 {
     vY -= G;
-    destRect.y -= vY;
-    if (destRect.y > Frame::winH - destRect.h)
-        destRect.y = Frame::winH - objH;
+    posY -= vY;
+    if (posY > Frame::winH - destRect.h)
+        posY = Frame::winH - destRect.h;
 }
 
 void Player::moveRight()
 {
-    destRect.x += vX;
+    posX += vX;
 }
 
 void Player::moveLeft()
 {
-    destRect.x -= vX;
+    posX -= vX;
 }

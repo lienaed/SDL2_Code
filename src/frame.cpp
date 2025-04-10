@@ -5,16 +5,17 @@
 #include "OOP/GameObject.hpp"
 #include "OOP/Player.hpp"
 #include "OOP/Enimy.hpp"
+#include "ObjectManager.hpp"
 
+//Create renderer and managers
 SDL_Renderer* Frame::renderer = nullptr;
-Map* level1 = new Map();
+std::vector <Map*> maps;
+ObjectManager objectManager;
 
-std::vector <GameObject*> gameObjects;
-Player* Knight = nullptr;
-Enimy* Shell = nullptr;
-
+//Other variables
 int Frame::winW = 0, Frame::winH = 0;
 
+//Constructor and destructor
 Frame::Frame(){}
 Frame::~Frame(){}
 
@@ -46,12 +47,11 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 
         SDL_GetWindowSize (window, &winW, &winH);
 
-        //Other initialization
-        level1 -> init ("assets/Maps/Level1.json");
-        Knight = new Player ("assets/Knight.png", 0, winH, 64, 64);
-        gameObjects.emplace_back (Knight);
-        Shell = new Enimy ("assets/Shell.png", 300, winH, 64, 64);
-        gameObjects.emplace_back (Shell);
+        //Other initializations
+        maps.emplace_back (new Map("/Users/fengyibo/program/SDL2/build/assets/Maps/Level1.json"));
+
+        objectManager.addObject (new Player ("Knight", "Player", "assets/Knight.png", 0, winH, 64, 64));
+        objectManager.addObject (new Enimy ("Shell", "Enimy", "assets/Shell.png", 300, winH, 64, 64));
 
         //Clear event
         SDL_Event dump;
@@ -92,8 +92,7 @@ void Frame::event()
 //Update
 void Frame::update()
 {
-    for (auto o : gameObjects)
-        o -> update();
+    objectManager.updateAll();
     
     InputManager::flush();
 }
@@ -102,9 +101,11 @@ void Frame::update()
 void Frame::render()
 {
     SDL_RenderClear (renderer);
-    level1 -> draw();
-    for (auto o : gameObjects)
-        o -> draw();
+    
+    for (auto o : maps)
+        o -> draw(0);
+
+    objectManager.drawAll();
 
     SDL_RenderPresent (renderer); 
 }

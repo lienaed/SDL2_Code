@@ -5,9 +5,9 @@
 class Map
 {
     public:
-        void init (const std::string& file);
+        Map (const std::string& file);
         void addChunk (const char* file, int num);
-        void draw();
+        void draw(int shift);
         std::vector <std::vector <int>> map;
     
     private:

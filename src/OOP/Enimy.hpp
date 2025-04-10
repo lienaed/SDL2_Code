@@ -4,19 +4,15 @@
 class Enimy : public GameObject
 {
     private:
-        int objW, objH;
         bool dir = 0;
         double vY = 0;
         double vX = 1;
         int counter = 0;
 
     public:
-        Enimy (const char* file, int xpos, int ypos, int destW, int destH) 
-            : GameObject::GameObject (file, xpos, ypos, destW, destH)
-        {
-            objW = destW;
-            objH = destH;
-        }
+        Enimy (const std::string& name, const std::string& tag, const char* file, int xpos, int ypos, int destW, int destH) 
+            : GameObject::GameObject (name, tag, file, xpos, ypos, destW, destH)
+        {}
 
         void update () override;
         void gravity();

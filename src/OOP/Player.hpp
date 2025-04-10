@@ -8,15 +8,12 @@ class Player : public GameObject
         
         double vY = 7;
         double vX = 2.5;
-        int objH, objW;
 
     public:
-        Player (const char* file, int xpos, int ypos, int destW, int destH) 
-            : GameObject::GameObject (file, xpos, ypos, destW, destH) 
-        {
-            objW = destW;
-            objH = destH;
-        }
+        Player (const std::string& name, const std::string& tag, const char* file, int xpos, int ypos, int destW, int destH) 
+            : GameObject::GameObject (name, tag, file, xpos, ypos, destW, destH) 
+        {}
+        
         void update() override; 
         void handelEvent(SDL_Scancode input);
         void jump();

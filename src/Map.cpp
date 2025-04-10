@@ -24,7 +24,7 @@ std::vector <std::vector <int>> loadMap(const std::string& path)
 }
 
 //Initialize map
-void Map::init(const std::string& file)
+Map::Map (const std::string& file)
 {
     chunks.resize (100);
     Map::addChunk ("assets/Sky.png", 0);
@@ -46,14 +46,14 @@ void Map::addChunk (const char* file, int num)
 }
 
 //Draw map
-void Map::draw()
+void Map::draw(int shift)
 {
     for (int r = 0; r < map.size(); r++)
     {
         dest.y = r * 32;
         for (int c = 0; c < map[0].size(); c++)
         {
-            dest.x = c * 32;
+            dest.x = c * 32 + shift;
             SDL_RenderCopy (Frame::renderer, chunks[map[r][c]], &src, &dest);
         }
     }
