@@ -1,5 +1,5 @@
 #include "Map.hpp"
-#include "TextureManager.hpp"
+#include "../TextureManager.hpp"
 
 using json = nlohmann::json;
 
@@ -24,7 +24,8 @@ std::vector <std::vector <int>> loadMap(const std::string& path)
 }
 
 //Initialize map
-Map::Map (const std::string& file)
+Map (const std::string& name, const std::string& tag, const std::string& file)
+    : GameObject (name, tag, file, 0, 0, 32, 32)
 {
     chunks.resize (100);
     Map::addChunk ("assets/Sky.png", 0);
@@ -46,7 +47,7 @@ void Map::addChunk (const char* file, int num)
 }
 
 //Draw map
-void Map::draw(int shift)
+void Map::draw(int shift) override
 {
     for (int r = 0; r < map.size(); r++)
     {
