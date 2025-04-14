@@ -1,6 +1,13 @@
 {
     "width": 25,
     "height": 20,
+    "chunks":
+    [
+        "assets/Sky.png",
+        "assets/Dirt.png",
+        "assets/Grass.png",
+        "assets/Water.png"
+    ],
     "tiles":
     [
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],

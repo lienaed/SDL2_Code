@@ -6,15 +6,13 @@
 class Map : public GameObject
 {
     public:
-        Map (const std::string& name, const std::string& tag, const std::string& file)
-            : GameObject (name, tag, file, 0, 0, 32, 32);
+        Map (const std::string& name, const std::string& tag, const char* file);
 
         void addChunk (const char* file, int num);
-        void draw(int shift);
-
-        std::vector <std::vector <int>> map;
+        void draw() override;
+        std::vector <std::vector <int>> loadMap(const char* path);
 
     private:
         std::vector <SDL_Texture*> chunks;
-        SDL_Rect src, dest;
-};
+        std::vector <std::vector <int>> map;
+};  

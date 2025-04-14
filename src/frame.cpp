@@ -1,15 +1,16 @@
 #include "Frame.hpp"
-#include "Map.hpp"
 #include "TextureManager.hpp"
 #include "InputManager.hpp"
+
+#include "ObjectManager.hpp"
 #include "OOP/GameObject.hpp"
+#include "OOP/Map.hpp"
 #include "OOP/Player.hpp"
 #include "OOP/Enimy.hpp"
-#include "ObjectManager.hpp"
 
 //Create renderer and managers
 SDL_Renderer* Frame::renderer = nullptr;
-std::vector <Map*> maps;
+ObjectManager mapManager;
 ObjectManager objectManager;
 
 //Other variables
@@ -48,7 +49,7 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
         SDL_GetWindowSize (window, &winW, &winH);
 
         //Other initializations
-        maps.emplace_back (new Map("/Users/fengyibo/program/SDL2/build/assets/Maps/Level1.json"));
+        mapManager.addObject (new Map ("Level1", "Map", "assets/Maps/Level1.json"));
 
         objectManager.addObject (new Player ("Knight", "Player", "assets/Knight.png", 0, winH, 64, 64));
         objectManager.addObject (new Enimy ("Shell", "Enimy", "assets/Shell.png", 300, winH, 64, 64));
@@ -92,6 +93,7 @@ void Frame::event()
 //Update
 void Frame::update()
 {
+    mapManager.updateAll();
     objectManager.updateAll();
     
     InputManager::flush();
@@ -102,9 +104,7 @@ void Frame::render()
 {
     SDL_RenderClear (renderer);
     
-    for (auto o : maps)
-        o -> draw(0);
-
+    mapManager.drawAll();
     objectManager.drawAll();
 
     SDL_RenderPresent (renderer); 

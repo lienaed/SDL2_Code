@@ -4,12 +4,13 @@
 using json = nlohmann::json;
 
 //Load map from JSON
-std::vector <std::vector <int>> loadMap(const std::string& path)
+std::vector <std::vector <int>> Map::loadMap(const char* path)
 {
     std::ifstream file (path);
     json data;
     file >> data;
     std::vector <std::vector <int>> map;
+
     for (const auto& row : data["tiles"])
     {
         std::vector <int> mapRow;
@@ -19,23 +20,26 @@ std::vector <std::vector <int>> loadMap(const std::string& path)
         }
         map.push_back (mapRow);
     }
+
+    chunks.resize (100);
+    int id = 0;
+    for (const auto& path : data["chunks"])
+    {
+        addChunk(path.get <std::string>().c_str(), id);
+        id++;
+    }
+
     std::cout << "Load map: x: " << data["width"] << ", y: " << data["height"] << std::endl;
     return map;
 }
 
 //Initialize map
-Map (const std::string& name, const std::string& tag, const std::string& file)
+Map::Map (const std::string& name, const std::string& tag, const char* file)
     : GameObject (name, tag, file, 0, 0, 32, 32)
 {
-    chunks.resize (100);
-    Map::addChunk ("assets/Sky.png", 0);
-    Map::addChunk ("assets/Dirt.png", 1);
-    Map::addChunk ("assets/Grass.png", 2);
-    Map::addChunk ("assets/Water.png", 3);
-    
-    src.x = src.y = 0;
-    src.w = src.h = 25;
-    dest.w = dest.h = 32;
+    srcRect.x = srcRect.y = 0;
+    srcRect.w = srcRect.h = 25;
+    destRect.w = destRect.h = 32;
 
     map = loadMap(file);
 }
@@ -47,15 +51,15 @@ void Map::addChunk (const char* file, int num)
 }
 
 //Draw map
-void Map::draw(int shift) override
+void Map::draw()
 {
     for (int r = 0; r < map.size(); r++)
     {
-        dest.y = r * 32;
+        destRect.y = r * 32;
         for (int c = 0; c < map[0].size(); c++)
         {
-            dest.x = c * 32 + shift;
-            SDL_RenderCopy (Frame::renderer, chunks[map[r][c]], &src, &dest);
+            destRect.x = c * 32;
+            SDL_RenderCopy (Frame::renderer, chunks[map[r][c]], &srcRect, &destRect);
         }
     }
 }
