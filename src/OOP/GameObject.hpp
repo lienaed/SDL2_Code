@@ -7,6 +7,7 @@ class GameObject
     protected:
         SDL_Texture* texture;
         SDL_Rect srcRect, destRect;
+        SDL_Rect hitbox;
         const double G = 0.3;
         double posX, posY;
 
