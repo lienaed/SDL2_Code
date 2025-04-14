@@ -10,7 +10,6 @@
 
 //Create renderer and managers
 SDL_Renderer* Frame::renderer = nullptr;
-ObjectManager mapManager;
 ObjectManager objectManager;
 
 //Other variables
@@ -48,9 +47,8 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 
         SDL_GetWindowSize (window, &winW, &winH);
 
-        //Other initializations
-        mapManager.addObject (new Map ("Level1", "Map", "assets/Maps/Level1.json"));
-
+        //Objects Initialization
+        objectManager.addObject (new Map ("Level1", "Map", "assets/Maps/Level1.json"));
         objectManager.addObject (new Player ("Knight", "Player", "assets/Knight.png", 0, winH, 64, 64));
         objectManager.addObject (new Enimy ("Shell", "Enimy", "assets/Shell.png", 300, winH, 64, 64));
 
@@ -93,7 +91,6 @@ void Frame::event()
 //Update
 void Frame::update()
 {
-    mapManager.updateAll();
     objectManager.updateAll();
     
     InputManager::flush();
@@ -104,7 +101,6 @@ void Frame::render()
 {
     SDL_RenderClear (renderer);
     
-    mapManager.drawAll();
     objectManager.drawAll();
 
     SDL_RenderPresent (renderer); 
