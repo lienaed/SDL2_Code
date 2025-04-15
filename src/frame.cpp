@@ -49,8 +49,8 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 
         //Objects Initialization
         objectManager.addObject (new Map ("Level1", "Map", "assets/Maps/Level1.json"));
-        objectManager.addObject (new Player ("Knight", "Player", "assets/Knight.png", 0, winH, 64, 64));
-        objectManager.addObject (new Enimy ("Shell", "Enimy", "assets/Shell.png", 300, winH, 64, 64));
+        objectManager.addObject (new Player ("Player", "Character", "assets/Knight.png", 0, winH, 64, 64));
+        objectManager.addObject (new Enimy ("Shell", "Character", "assets/Shell.png", 300, winH, 64, 64));
 
         //Clear event
         SDL_Event dump;
@@ -92,6 +92,7 @@ void Frame::event()
 void Frame::update()
 {
     objectManager.updateAll();
+    //
     
     InputManager::flush();
 }

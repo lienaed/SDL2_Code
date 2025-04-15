@@ -6,14 +6,16 @@ GameObject::GameObject(const std::string& name, const std::string& tag, const ch
 {
     texture = TextureManager::LoadTexture (file);
     
-    srcRect.x = srcRect.y = 0;
-    srcRect.w = srcRect.h = 32;
+    srcRect = {0, 0, 32, 32};
+
     destRect.w = destW;
     destRect.h = destH;
     destRect.x = xpos;
     destRect.y = ypos;
     posX = destRect.x;
     posY = destRect.y;
+
+    hitbox = destRect;
 }
 
 void GameObject::update()
@@ -22,6 +24,12 @@ void GameObject::update()
 void GameObject::draw()
 {
     TextureManager::draw (texture, srcRect, destRect);
+}
+
+void GameObject::move(int x, int y)
+{
+    destRect.x = static_cast <int> (x);
+    destRect.y = static_cast <int> (y);
 }
 
 GameObject::~GameObject() 

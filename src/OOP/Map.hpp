@@ -12,7 +12,7 @@ class Map : public GameObject
         void draw() override;
         std::vector <std::vector <int>> loadMap(const char* path);
 
-    private:
-        std::vector <SDL_Texture*> chunks;
-        std::vector <std::vector <int>> map;
+    protected:
+        static std::vector <SDL_Texture*> chunks;
+        static std::vector <std::vector <int>> map;
 };  

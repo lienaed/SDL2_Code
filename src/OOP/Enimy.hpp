@@ -5,8 +5,8 @@ class Enimy : public GameObject
 {
     private:
         bool dir = 0;
-        double vY = 0;
-        double vX = 1;
+        vY = 0;
+        vX = 1;
         int counter = 0;
 
     public:

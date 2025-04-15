@@ -2,6 +2,8 @@
 
 void Player::update()
 {
+    formerDest = destRect;
+    
     if (InputManager::keyPress (SDL_SCANCODE_SPACE))
         jump();
     
@@ -12,9 +14,7 @@ void Player::update()
         moveLeft();
     
     gravity();
-
-    destRect.x = static_cast <int> (posX);
-    destRect.y = static_cast <int> (posY);
+    move(posX, posY);
 }
 
 void Player::jump()
