@@ -4,14 +4,14 @@
 #include "OOP/GameObject.hpp"
 #include "OOP/Map.hpp"
 #include "OOP/Player.hpp"
-#include "OOP/Enimy.hpp"
+#include "OOP/Shell.hpp"
 
 class CollisionManager
 {
     private:
-Map::
+
 
     public:
-        void CharacterCollision(SDL_Rect rect1, SDL_Rect rect2, SDL_Rect lastDest1, SDL_Rect lastDest2);
+        static char CharacterCollision(const SDL_Rect& box1, const SDL_Rect& box2, const SDL_Rect& lastDest1, const SDL_Rect& lastDest2);
 
 };

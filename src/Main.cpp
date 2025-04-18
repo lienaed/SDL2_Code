@@ -26,8 +26,8 @@ int main ()
         FrameStart = SDL_GetTicks() - FrameStart;
         if (FrameStart < FrameDelay)
             SDL_Delay (FrameDelay - FrameStart);
-        else
-            std::cout << "Low Frame" << std::endl;
+        //else
+            //std::cout << "Low Frame" << std::endl;
     }
     std::cout << "Clearing" << std::endl;
     game -> clear();

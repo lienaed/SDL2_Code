@@ -1,12 +1,13 @@
 #include "Frame.hpp"
 #include "TextureManager.hpp"
 #include "InputManager.hpp"
+#include "CollisionManager.hpp"
 
 #include "ObjectManager.hpp"
 #include "OOP/GameObject.hpp"
 #include "OOP/Map.hpp"
 #include "OOP/Player.hpp"
-#include "OOP/Enimy.hpp"
+#include "OOP/Shell.hpp"
 
 //Create renderer and managers
 SDL_Renderer* Frame::renderer = nullptr;
@@ -49,8 +50,8 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 
         //Objects Initialization
         objectManager.addObject (new Map ("Level1", "Map", "assets/Maps/Level1.json"));
-        objectManager.addObject (new Player ("Player", "Character", "assets/Knight.png", 0, winH, 64, 64));
-        objectManager.addObject (new Enimy ("Shell", "Character", "assets/Shell.png", 300, winH, 64, 64));
+        objectManager.addObject (new Player ("Player", "Friendly", "assets/Knight.png", 0, winH, 64, 64));
+        objectManager.addObject (new Shell ("Shell", "Enimy", "assets/Shell.png", 300, winH, 64, 64));
 
         //Clear event
         SDL_Event dump;
@@ -92,7 +93,18 @@ void Frame::event()
 void Frame::update()
 {
     objectManager.updateAll();
-    //
+
+    auto* p = objectManager.findObject ("Player");
+    std::cout << p << std::endl;
+    for (auto* o : objectManager.findObjectType ("Enimy"))
+    {
+        char result = CollisionManager::CharacterCollision (p->getHitbox(), p->getFormerRect(), o->getHitbox(), o->getFormerRect());
+        if (result != 'n')
+        {
+            if (Player* player = dynamic_cast <Player*> (p))
+                player->onCollision(result, o);
+        }
+    }
     
     InputManager::flush();
 }

@@ -1,6 +1,6 @@
-#include "Enimy.hpp"
+#include "Shell.hpp"
 
-void Enimy::update()
+void Shell::update()
 {
     formerDest = destRect;
     
@@ -18,15 +18,16 @@ void Enimy::update()
     counter++;
     if (counter == 50)
     {
-        counter = 0
+        counter = 0;
         dir = !dir;
     }
         
     gravity();
     move(posX, posY);
+    hitbox = destRect;
 }
 
-void Enimy::gravity()
+void Shell::gravity()
 {
     vY -= G;
     posY -= vY;

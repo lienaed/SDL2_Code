@@ -11,6 +11,7 @@ std::vector <std::vector <int>> Map::loadMap(const char* path)
     file >> data;
     std::vector <std::vector <int>> map;
 
+    //Read Map
     for (const auto& row : data["tiles"])
     {
         std::vector <int> mapRow;
@@ -21,6 +22,7 @@ std::vector <std::vector <int>> Map::loadMap(const char* path)
         map.push_back (mapRow);
     }
 
+    //Load Textures
     chunks.resize (100);
     int id = 0;
     for (const auto& path : data["chunks"])

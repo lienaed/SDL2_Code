@@ -10,9 +10,9 @@ class Map : public GameObject
 
         void addChunk (const char* file, int num);
         void draw() override;
-        std::vector <std::vector <int>> loadMap(const char* path);
 
     protected:
-        static std::vector <SDL_Texture*> chunks;
-        static std::vector <std::vector <int>> map;
-};  
+        std::vector <SDL_Texture*> chunks;
+        std::vector <std::vector <int>> map;
+        std::vector <std::vector <int>> loadMap(const char* path);
+}; 
