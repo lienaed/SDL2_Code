@@ -3,10 +3,10 @@
     "height": 20,
     "chunks":
     [
-        "assets/Sky.png",
-        "assets/Dirt.png",
-        "assets/Grass.png",
-        "assets/Water.png"
+        {"path": "assets/Sky.png", "tag": "gas"},
+        {"path": "assets/Dirt.png", "tag": "solid"},
+        {"path": "assets/Grass.png", "tag": "solid"},
+        {"path": "assets/Water.png", "tag": "liquid"}
     ],
     "tiles":
     [

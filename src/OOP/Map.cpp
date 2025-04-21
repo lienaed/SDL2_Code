@@ -4,13 +4,13 @@
 using json = nlohmann::json;
 
 //Load map from JSON
-std::vector <std::vector <int>> Map::loadMap(const char* path)
+std::vector <std::vector <std::pair<int, int>>> Map::loadMap(const char* path)
 {
     std::ifstream file (path);
     json data;
     file >> data;
     std::vector <std::vector <std::pair<int, int>>> map;
-    bool solid[100];
+    std::map<int, bool> material;
 
     //Load Textures
     chunks.resize (100);
@@ -18,7 +18,21 @@ std::vector <std::vector <int>> Map::loadMap(const char* path)
     for (const auto& path : data["chunks"])
     {
         addChunk(path["path"].get <std::string>().c_str(), id);
-        solid[id] = path["tag"];
+
+        std::string tag = path["tag"].get <std::string>();
+        if (tag == "solid")
+        {
+            material[id] = 1;
+        }
+        else if (tag == "liquid")
+        {
+            material[id] = 2;
+        }
+        else if (tag == "gas")
+        {
+            material[id] = 0;
+        }
+
         id++;
     }
 
@@ -28,12 +42,9 @@ std::vector <std::vector <int>> Map::loadMap(const char* path)
         std::vector <std::pair<int, int>> mapRow;
         for (const auto& tile : row)
         {
-            if (solid[tile])
-                mapRow.push_back ((tile), 1);
-            else
-                mapRow.push_back ((tile), 0);
+            mapRow.emplace_back ((tile), material[tile]);
         }
-        map.push_back (mapRow);
+        map.emplace_back (mapRow);
     }
 
     std::cout << "Load map: x: " << data["width"] << ", y: " << data["height"] << std::endl;
@@ -66,7 +77,7 @@ void Map::draw()
         for (int c = 0; c < map[0].size(); c++)
         {
             destRect.x = c * 32;
-            SDL_RenderCopy (Frame::renderer, chunks[map[r][c]], &srcRect, &destRect);
+            SDL_RenderCopy (Frame::renderer, chunks[map[r][c].first], &srcRect, &destRect);
         }
     }
 }
