@@ -13,6 +13,6 @@ class Map : public GameObject
 
     protected:
         std::vector <SDL_Texture*> chunks;
-        std::vector <std::vector <int>> map;
+        std::vector <std::vector <std::pair<int, int>>> map;
         std::vector <std::vector <int>> loadMap(const char* path);
 }; 

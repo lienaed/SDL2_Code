@@ -9,26 +9,31 @@ std::vector <std::vector <int>> Map::loadMap(const char* path)
     std::ifstream file (path);
     json data;
     file >> data;
-    std::vector <std::vector <int>> map;
-
-    //Read Map
-    for (const auto& row : data["tiles"])
-    {
-        std::vector <int> mapRow;
-        for (const auto& tile : row)
-        {
-            mapRow.push_back (tile);
-        }
-        map.push_back (mapRow);
-    }
+    std::vector <std::vector <std::pair<int, int>>> map;
+    bool solid[100];
 
     //Load Textures
     chunks.resize (100);
     int id = 0;
     for (const auto& path : data["chunks"])
     {
-        addChunk(path.get <std::string>().c_str(), id);
+        addChunk(path["path"].get <std::string>().c_str(), id);
+        solid[id] = path["tag"];
         id++;
+    }
+
+    //Read Map
+    for (const auto& row : data["tiles"])
+    {
+        std::vector <std::pair<int, int>> mapRow;
+        for (const auto& tile : row)
+        {
+            if (solid[tile])
+                mapRow.push_back ((tile), 1);
+            else
+                mapRow.push_back ((tile), 0);
+        }
+        map.push_back (mapRow);
     }
 
     std::cout << "Load map: x: " << data["width"] << ", y: " << data["height"] << std::endl;
