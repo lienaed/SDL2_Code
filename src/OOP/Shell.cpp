@@ -2,7 +2,7 @@
 
 void Shell::update()
 {
-    formerDest = destRect;
+    lastDest = destRect;
     
     if (dir)
     {

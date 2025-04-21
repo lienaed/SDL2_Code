@@ -2,7 +2,7 @@
 
 void Player::update()
 {
-    formerDest = destRect;
+    lastDest = destRect;
     
     handelEvent();
     gravity();
@@ -27,7 +27,7 @@ void Player::handelEvent()
     void Player::jump()
     {
         if (posY == Frame::winH - destRect.h)
-            vY = 5;
+            vY = 10;
 
         space = 0;
     }
@@ -54,24 +54,28 @@ void Player::handelEvent()
 //Enimy Collision Detect
 void Player::onCollision(char dir, GameObject* target)
 {
-    std::cout << "Interact" << std::endl;
     SDL_Rect targetBox = target->getHitbox();
+
     switch (dir)
     {
         case 'l':
             posX = targetBox.x - destRect.w;
+            //std::cout << "l" << std::endl;
             break;
         
         case 'r':
             posX = targetBox.x + targetBox.w;
+            //std::cout << "r" << std::endl;
             break;
         
         case 'u':
             posY = targetBox.y - destRect.h;
+            //std::cout << "u" << std::endl;
             break;
         
         case 'd':
             posY = targetBox.y + targetBox.h;
+            //std::cout << "d" << std::endl;
             break;
     }
     move(posX, posY);

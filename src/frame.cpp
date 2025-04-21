@@ -95,10 +95,10 @@ void Frame::update()
     objectManager.updateAll();
 
     auto* p = objectManager.findObject ("Player");
-    std::cout << p << std::endl;
+
     for (auto* o : objectManager.findObjectType ("Enimy"))
     {
-        char result = CollisionManager::CharacterCollision (p->getHitbox(), p->getFormerRect(), o->getHitbox(), o->getFormerRect());
+        char result = CollisionManager::CharacterCollision (p->getHitbox(), o->getHitbox(), p->getFormerRect(), o->getFormerRect());
         if (result != 'n')
         {
             if (Player* player = dynamic_cast <Player*> (p))

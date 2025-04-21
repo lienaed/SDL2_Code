@@ -5,6 +5,8 @@ void ObjectManager::addObject (GameObject* obj)
     objects.emplace_back (obj);
     names.emplace (obj->name, obj);
     tags.emplace (obj->tag, obj);
+
+    
 }
 
 GameObject* ObjectManager::findObject (const std::string& name)

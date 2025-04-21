@@ -11,7 +11,7 @@ class Player : public GameObject
             : GameObject::GameObject (name, tag, file, xpos, ypos, destW, destH) 
         {        
             vY = 7;
-            vX = 2.5;
+            vX = 5;
         }
         
         void update() override; 
