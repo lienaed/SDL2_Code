@@ -10,7 +10,6 @@ class CollisionManager
 {
     private:
 
-
     public:
         static char CharacterCollision(const SDL_Rect& box1, const SDL_Rect& box2, const SDL_Rect& lastDest1, const SDL_Rect& lastDest2);
 
