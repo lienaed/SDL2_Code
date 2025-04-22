@@ -28,3 +28,8 @@ char CollisionManager::CharacterCollision(const SDL_Rect& box1, const SDL_Rect& 
     
     return result;
 }
+
+char CollisionManager::MapCollision (const SDL_Rect& box, std::vector <std::vector <std::pair<int, int>>> map)
+{
+    int lBlock = box.x / 32, rBlock = (box.x + box.w) / 32 + 1;
+}

@@ -10,6 +10,11 @@ class Map : public GameObject
 
         void addChunk (const char* file, int num);
         void draw() override;
+        
+        std::vector <std::vector <std::pair<int, int>>> getMap()
+        {
+            return map;
+        }
 
     protected:
         std::vector <SDL_Texture*> chunks;
