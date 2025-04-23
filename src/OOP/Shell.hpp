@@ -12,7 +12,7 @@ class Shell : public GameObject
             : GameObject::GameObject (name, tag, file, xpos, ypos, destW, destH)
         {
             vY = 0;
-            vX = 1;
+            vX = 0;
         }
 
         void update () override;
