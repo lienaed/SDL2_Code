@@ -1,8 +1,8 @@
 #include "CollisionManager.hpp"
 
-char CollisionManager::CharacterCollision(const SDL_Rect& box1, const SDL_Rect& box2, const SDL_Rect& lastDest1, const SDL_Rect& lastDest2)
+std::array <char, 3> CollisionManager::Collision(const SDL_Rect& box1, const SDL_Rect& box2, const SDL_Rect& lastDest1, const SDL_Rect& lastDest2)
 {
-     char result = 'n';
+    std::array <char, 3> result = {'n', 'n', 'n'};
 
     if (SDL_HasIntersection(&box1, &box2)) 
     {
@@ -20,30 +20,41 @@ char CollisionManager::CharacterCollision(const SDL_Rect& box1, const SDL_Rect& 
         if (interWidth < interHeight)
         {
             // 横向碰撞
-            result = lastDest1.x < lastDest2.x ? 'l' : 'r';
+            result[0] = lastDest1.x < lastDest2.x ? 'l' : 'r';
         }
         else
         {
             // 纵向碰撞
-            result = lastDest1.y < lastDest2.y ? 'u' : 'd';
+            result[1] = lastDest1.y < lastDest2.y ? 'u' : 'd';
         }
     }
 
     return result;
 }
 
-char CollisionManager::MapCollision (const SDL_Rect& box, std::vector <std::vector <std::pair<int, int>>> map)
+std::array <char, 3> CollisionManager::MapCollision (const SDL_Rect& box, const SDL_Rect& lastDest, std::vector <std::vector <std::pair<int, int>>> map)
 {
+    std::array <char, 3> result = {'n', 'n', 'n'};
     int lBlock = box.x / 32, rBlock = (box.x + box.w) / 32 + 1;
     int uBlock = box.y / 32, dBlock = (box.y + box.h) / 32 + 1;
+
     for (int r = uBlock; r <= dBlock; r++)
     {
         for (int c = lBlock; c <= rBlock; c++)
         {
             if (map[r][c].second == 1)
             {
-                
+                SDL_Rect tile = {c*32, r*32, 32, 32};
+
+                auto tmp = CollisionManager::Collision (box, tile, lastDest, tile);
+                if (tmp[0] != 'n')
+                    result[0] = tmp[0];
+                if (tmp[1] != 'n')
+                    result[1] = tmp[1];
             }
+            else if (map[r][c].second == 2)
+                result[2] = 'w';
         }
     }
+    return result;
 }

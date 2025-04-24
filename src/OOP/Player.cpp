@@ -52,11 +52,12 @@ void Player::handelEvent()
 //End Movements
 
 //Enimy Collision Detect
-void Player::onCollision(char dir, GameObject* target)
+void Player::onCollision(std::array <char, 3> dir, GameObject* target)
 {
     SDL_Rect targetBox = target->getHitbox();
 
-    switch (dir)
+    std::cout << dir[0] << ' ' << dir[1] << ' ' << dir[2] << std::endl;
+    switch (dir[0])
     {
         case 'l':
             posX = targetBox.x - destRect.w;
@@ -67,7 +68,9 @@ void Player::onCollision(char dir, GameObject* target)
             posX = targetBox.x + targetBox.w;
             //std::cout << "r" << std::endl;
             break;
-        
+    }
+    switch (dir[1])
+    {
         case 'u':
             posY = targetBox.y - destRect.h;
             //std::cout << "u" << std::endl;
@@ -78,5 +81,20 @@ void Player::onCollision(char dir, GameObject* target)
             //std::cout << "d" << std::endl;
             break;
     }
+    // switch (dir[2])
+    // {
+    //     case 'n':
+    //         vX = 5;
+    //         vY = 7;
+    //         //std::cout << "u" << std::endl;
+    //         break;
+        
+    //     case 'w':
+    //         vX = 3;
+    //         vY = 4;
+    //         //std::cout << "d" << std::endl;
+    //         break;
+    // }    
+
     move(posX, posY);
 }

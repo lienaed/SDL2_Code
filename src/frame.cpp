@@ -9,7 +9,7 @@
 #include "OOP/Player.hpp"
 #include "OOP/Shell.hpp"
 
-//Create renderer and managers
+//Create renderer and manager
 SDL_Renderer* Frame::renderer = nullptr;
 ObjectManager objectManager;
 
@@ -50,7 +50,7 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
 
         //Objects Initialization
         objectManager.addObject (new Map ("Level1", "Map", "assets/Maps/Level1.json"));
-        objectManager.addObject (new Player ("Player", "Friendly", "assets/Knight.png", 0, winH, 64, 64));
+        objectManager.addObject (new Player ("Player", "Friendly", "assets/Knight.png", 0, 0, 64, 64));
         objectManager.addObject (new Shell ("Shell", "Enimy", "assets/Shell.png", 300, winH, 64, 64));
 
         //Clear event
@@ -94,12 +94,17 @@ void Frame::update()
 {
     objectManager.updateAll();
 
+    std::array <char, 3> result; 
     auto* p = objectManager.findObject ("Player");
+    // auto* m = objectManager.findObject ("Level1");
+    // Map* map = dynamic_cast <Map*> (m);
+    // result = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), map->getMap());
 
     for (auto* o : objectManager.findObjectType ("Enimy"))
     {
-        char result = CollisionManager::CharacterCollision (p->getHitbox(), o->getHitbox(), p->getFormerRect(), o->getFormerRect());
-        if (result != 'n')
+        result = CollisionManager::Collision (p->getHitbox(), o->getHitbox(), p->getLastDest(), o->getLastDest());
+
+        if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
         {
             if (Player* player = dynamic_cast <Player*> (p))
                 player->onCollision(result, o);

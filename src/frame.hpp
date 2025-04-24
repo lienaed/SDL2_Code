@@ -5,6 +5,7 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <array>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

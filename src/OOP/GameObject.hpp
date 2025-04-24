@@ -24,7 +24,7 @@ class GameObject
         virtual void draw();
         virtual void move(int x, int y);
         
-        virtual SDL_Rect getFormerRect()
+        virtual SDL_Rect getLastDest()
         {
             return lastDest;
         }
