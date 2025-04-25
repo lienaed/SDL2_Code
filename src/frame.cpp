@@ -89,28 +89,63 @@ void Frame::event()
 
 }
 
+// //Update
+// void Frame::update()
+// {
+//     objectManager.updateAll();
+
+//     std::array <char, 3> result; 
+//     auto* p = objectManager.findObject ("Player");
+//     // auto* m = objectManager.findObject ("Level1");
+//     // Map* map = dynamic_cast <Map*> (m);
+//     // result = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), map->getMap());
+
+//     for (auto* o : objectManager.findObjectType ("Enimy"))
+//     {
+//         result = CollisionManager::Collision (p->getHitbox(), o->getHitbox(), p->getLastDest(), o->getLastDest());
+
+//         if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
+//         {
+//             if (Player* player = dynamic_cast <Player*> (p))
+//                 player->onCollision(result, o);
+//         }
+//     }
+    
+//     InputManager::flush();
+// }
+
 //Update
 void Frame::update()
 {
     objectManager.updateAll();
 
     std::array <char, 3> result; 
-    auto* p = objectManager.findObject ("Player");
-    // auto* m = objectManager.findObject ("Level1");
-    // Map* map = dynamic_cast <Map*> (m);
-    // result = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), map->getMap());
 
-    for (auto* o : objectManager.findObjectType ("Enimy"))
+    auto* playerObj = objectManager.findObject ("Player");
+    auto* mapObj = objectManager.findObject ("Level1");
+    if (!playerObj || !mapObj)
+        return;
+    
+    Player* p = dynamic_cast <Player*> (playerObj);
+    Map* m = dynamic_cast <Map*> (mapObj);
+    if (!p || !m)
+        return;
+
+    //Enimy Collision Detect
+    for (auto* e : objectManager.findObjectType ("Enimy"))
     {
-        result = CollisionManager::Collision (p->getHitbox(), o->getHitbox(), p->getLastDest(), o->getLastDest());
+        result = CollisionManager::Collision (p->getHitbox(), e->getHitbox(), p->getLastDest(), e->getLastDest());
 
         if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
         {
-            if (Player* player = dynamic_cast <Player*> (p))
-                player->onCollision(result, o);
+            p->onCollision(result, e);
         }
     }
-    
+
+    //Map Collision Detect
+    result = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), m->getMap());
+    if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
+        p->onCollision (result, m)
     InputManager::flush();
 }
 

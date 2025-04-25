@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "Map.hpp"
 
 void Player::update()
 {
@@ -54,6 +55,9 @@ void Player::handelEvent()
 //Enimy Collision Detect
 void Player::onCollision(std::array <char, 3> dir, GameObject* target)
 {
+    if (Map* m = dynamic_cast <Map*> (target))
+        SDL_Rect targetBox = m->getTileBox()
+        
     SDL_Rect targetBox = target->getHitbox();
 
     std::cout << dir[0] << ' ' << dir[1] << ' ' << dir[2] << std::endl;

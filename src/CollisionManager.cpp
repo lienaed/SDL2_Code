@@ -19,12 +19,10 @@ std::array <char, 3> CollisionManager::Collision(const SDL_Rect& box1, const SDL
 
         if (interWidth < interHeight)
         {
-            // 横向碰撞
             result[0] = lastDest1.x < lastDest2.x ? 'l' : 'r';
         }
         else
         {
-            // 纵向碰撞
             result[1] = lastDest1.y < lastDest2.y ? 'u' : 'd';
         }
     }
@@ -35,8 +33,10 @@ std::array <char, 3> CollisionManager::Collision(const SDL_Rect& box1, const SDL
 std::array <char, 3> CollisionManager::MapCollision (const SDL_Rect& box, const SDL_Rect& lastDest, std::vector <std::vector <std::pair<int, int>>> map)
 {
     std::array <char, 3> result = {'n', 'n', 'n'};
-    int lBlock = box.x / 32, rBlock = (box.x + box.w) / 32 + 1;
-    int uBlock = box.y / 32, dBlock = (box.y + box.h) / 32 + 1;
+    int lBlock = std::max (0, box.x / 32), rBlock = std::min ((box.x + box.w) / 32 + 1, (int)map[0].size()-1);
+    int uBlock = std::max (0, box.y / 32), dBlock = std::min ((box.y + box.h) / 32 + 1, (int)map.size()-1);
+
+    int cCheck = 0, rCheck = 0;
 
     for (int r = uBlock; r <= dBlock; r++)
     {
@@ -44,11 +44,21 @@ std::array <char, 3> CollisionManager::MapCollision (const SDL_Rect& box, const 
         {
             if (map[r][c].second == 1)
             {
-                SDL_Rect tile = {c*32, r*32, 32, 32};
+                SDL_Rect tile = Map::getTileBox (c, r);
 
                 auto tmp = CollisionManager::Collision (box, tile, lastDest, tile);
-                if (tmp[0] != 'n')
+                if (tmp[0] == 'l')
+                {
                     result[0] = tmp[0];
+                    if (c > cCheck)
+                        cCheck = c;
+                }
+                else if (tmp[0] == 'r')
+                {
+                    result[0] = tmp[0];
+                    if ()
+                }
+
                 if (tmp[1] != 'n')
                     result[1] = tmp[1];
             }

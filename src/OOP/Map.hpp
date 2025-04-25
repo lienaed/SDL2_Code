@@ -11,9 +11,15 @@ class Map : public GameObject
         void addChunk (const char* file, int num);
         void draw() override;
         
-        std::vector <std::vector <std::pair<int, int>>> getMap()
+        const std::vector <std::vector <std::pair<int, int>>>& getMap() const
         {
             return map;
+        }
+
+        const SDL_Rect getTileBox(int c, int r)
+        {
+            SDL_Rect tile = {c*32, r*32, 32, 32};
+            return tile;
         }
 
     protected:
