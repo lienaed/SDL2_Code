@@ -119,8 +119,8 @@ void Frame::update()
 {
     objectManager.updateAll();
 
+    //Collision Update
     std::array <char, 3> result; 
-
     auto* playerObj = objectManager.findObject ("Player");
     auto* mapObj = objectManager.findObject ("Level1");
     if (!playerObj || !mapObj)
@@ -138,14 +138,23 @@ void Frame::update()
 
         if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
         {
-            p->onCollision(result, e);
+            p->onCollision(result, e, -1, -1);
         }
     }
 
     //Map Collision Detect
-    result = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), m->getMap());
+    std::array <char, 5> CollInfo = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), m->getMap())
+    result[0] = CollInfo[0];
+    result[1] = CollInfo[1];
+    result[2] = CollInfo[2];
+    int cCheck = (int)CollInfo[3];
+    int rCheck = (int)CollInfo[4];
+
     if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
-        p->onCollision (result, m)
+        p->onCollision (result, m, cCheck, rCheck);
+
+
+    //Clean InputManager Events
     InputManager::flush();
 }
 

@@ -16,7 +16,7 @@ class Map : public GameObject
             return map;
         }
 
-        const SDL_Rect getTileBox(int c, int r) const
+        static SDL_Rect getTileBox(int c, int r)
         {
             SDL_Rect tile = {c*32, r*32, 32, 32};
             return tile;

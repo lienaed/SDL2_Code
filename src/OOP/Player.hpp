@@ -20,5 +20,5 @@ class Player : public GameObject
         void gravity();
         void moveRight();
         void moveLeft();
-        void onCollision(std::array <char, 3> dir, GameObject* target);
+        void onCollision(std::array <char, 3> dir, GameObject* target, int cCheck, int rCheck);
 };

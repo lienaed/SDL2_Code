@@ -30,11 +30,12 @@ std::array <char, 3> CollisionManager::Collision(const SDL_Rect& box1, const SDL
     return result;
 }
 
-std::array <char, 3> CollisionManager::MapCollision (const SDL_Rect& box, const SDL_Rect& lastDest, std::vector <std::vector <std::pair<int, int>>> map)
+std::array <char, 5> CollisionManager::MapCollision (const SDL_Rect& box, const SDL_Rect& lastDest, std::vector <std::vector <std::pair<int, int>>> map)
 {
-    std::array <char, 3> result = {'n', 'n', 'n'};
+    std::array <char, 5> result = {'n', 'n', 'n'};
     int lBlock = std::max (0, box.x / 32), rBlock = std::min ((box.x + box.w) / 32 + 1, (int)map[0].size()-1);
     int uBlock = std::max (0, box.y / 32), dBlock = std::min ((box.y + box.h) / 32 + 1, (int)map.size()-1);
+    int cCheck = -1, rCheck = -1;
 
 
     for (int r = uBlock; r <= dBlock; r++)
@@ -49,19 +50,34 @@ std::array <char, 3> CollisionManager::MapCollision (const SDL_Rect& box, const 
                 if (tmp[0] == 'l')
                 {
                     result[0] = tmp[0];
-
+                    if (cCheck == -1 || c > cCheck)
+                        cCheck = c;
                 }
                 else if (tmp[0] == 'r')
                 {
                     result[0] = tmp[0];
-
+                    if (cCheck == -1 || c < cCheck)
+                        cCheck = c;
                 }
 
-                if (tmp[1] != 'n')
+                if (tmp[1] == 'u')
+                {
                     result[1] = tmp[1];
+                    if (rCheck == -1 || r < rCheck)
+                        rCheck = r;
+                }
+                else if (tmp[1] == 'd')
+                {
+                    result[1] = tmp[1];
+                    if (rCheck == -1 || r > rCheck)
+                        rCheck = r;
+                }
             }
             else if (map[r][c].second == 2)
                 result[2] = 'w';
+            
+            result[3] = (char)cCheck;
+            result[4] = (char)rCheck;
         }
     }
     return result;

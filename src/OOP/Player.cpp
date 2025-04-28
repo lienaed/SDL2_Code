@@ -52,39 +52,53 @@ void Player::handelEvent()
     }
 //End Movements
 
-//Enimy Collision Detect
-void Player::onCollision(std::array <char, 3> dir, GameObject* target)
+
+//Map/Enimy Collision Detect
+void Player::onCollision(std::array <char, 3> dir, GameObject* target, int cCheck, int rCheck)
 {
-    if (Map* m = dynamic_cast <Map*> (target))
-        SDL_Rect targetBox = m->getTileBox()
-        
-    SDL_Rect targetBox = target->getHitbox();
+    //Enimy Case
+    if (cCheck == rCheck == -1)
+    {
+        SDL_Rect targetBox1 = target->getHitbox ();
+        SDL_Rect targetBox2 = target->getHitbox ();
+    }
+    //Map Case
+    else
+    {
+        Map* m = dynamic_cast <Map*> (target);
+        SDL_Rect targetBox1 = m->getTileBox (0, cCheck);
+        SDL_Rect targetBox2 = m->getTileBox (rCheck, 0);
+    }
 
     std::cout << dir[0] << ' ' << dir[1] << ' ' << dir[2] << std::endl;
+    
+
     switch (dir[0])
     {
         case 'l':
-            posX = targetBox.x - destRect.w;
+            posX = targetBox1.x - destRect1.w;
             //std::cout << "l" << std::endl;
             break;
         
         case 'r':
-            posX = targetBox.x + targetBox.w;
+            posX = targetBox1.x + targetBox1.w;
             //std::cout << "r" << std::endl;
             break;
     }
     switch (dir[1])
     {
         case 'u':
-            posY = targetBox.y - destRect.h;
+            posY = targetBox2.y - destRect2.h;
             //std::cout << "u" << std::endl;
             break;
         
         case 'd':
-            posY = targetBox.y + targetBox.h;
+            posY = targetBox2.y + targetBox2.h;
             //std::cout << "d" << std::endl;
             break;
     }
+
+    move(posX, posY);
     // switch (dir[2])
     // {
     //     case 'n':
@@ -98,7 +112,5 @@ void Player::onCollision(std::array <char, 3> dir, GameObject* target)
     //         vY = 4;
     //         //std::cout << "d" << std::endl;
     //         break;
-    // }    
-
-    move(posX, posY);
+    // }
 }

@@ -14,7 +14,7 @@
 #include <json.hpp>
 
 class Frame
-{
+{  
     public:
         Frame();
         ~Frame();
