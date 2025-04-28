@@ -36,7 +36,6 @@ std::array <char, 3> CollisionManager::MapCollision (const SDL_Rect& box, const 
     int lBlock = std::max (0, box.x / 32), rBlock = std::min ((box.x + box.w) / 32 + 1, (int)map[0].size()-1);
     int uBlock = std::max (0, box.y / 32), dBlock = std::min ((box.y + box.h) / 32 + 1, (int)map.size()-1);
 
-    int cCheck = 0, rCheck = 0;
 
     for (int r = uBlock; r <= dBlock; r++)
     {
@@ -50,13 +49,12 @@ std::array <char, 3> CollisionManager::MapCollision (const SDL_Rect& box, const 
                 if (tmp[0] == 'l')
                 {
                     result[0] = tmp[0];
-                    if (c > cCheck)
-                        cCheck = c;
+
                 }
                 else if (tmp[0] == 'r')
                 {
                     result[0] = tmp[0];
-                    if ()
+
                 }
 
                 if (tmp[1] != 'n')
