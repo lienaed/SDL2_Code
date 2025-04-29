@@ -54,47 +54,51 @@ void Player::handelEvent()
 
 
 //Map/Enimy Collision Detect
-void Player::onCollision(std::array <char, 3> dir, GameObject* target, int cCheck, int rCheck)
+void Player::onCollision (std::array <char, 3> dir, GameObject* target, int cCheck, int rCheck)
 {
+    SDL_Rect targetBoxH;
+    SDL_Rect targetBoxV;
     //Enimy Case
-    if (cCheck == rCheck == -1)
+    if (cCheck == -1 && rCheck == -1)
     {
-        SDL_Rect targetBox1 = target->getHitbox ();
-        SDL_Rect targetBox2 = target->getHitbox ();
+        targetBoxH = target->getHitbox ();
+        targetBoxV = target->getHitbox ();
     }
     //Map Case
     else
     {
-        Map* m = dynamic_cast <Map*> (target);
-        SDL_Rect targetBox1 = m->getTileBox (0, cCheck);
-        SDL_Rect targetBox2 = m->getTileBox (rCheck, 0);
+        // Map* m = dynamic_cast <Map*> (target);
+        // targetBoxH = m->getTileBox (0, cCheck);
+        // targetBoxV = m->getTileBox (rCheck, 0);
+        std::cout << "Map Collision." << std::endl;
+        std::cout << dir[0] << ' ' << dir[1] << ' ' << dir[2] << std::endl;
+        return;
     }
 
     std::cout << dir[0] << ' ' << dir[1] << ' ' << dir[2] << std::endl;
     
-
-    switch (dir[0])
-    {
-        case 'l':
-            posX = targetBox1.x - destRect1.w;
-            //std::cout << "l" << std::endl;
-            break;
-        
-        case 'r':
-            posX = targetBox1.x + targetBox1.w;
-            //std::cout << "r" << std::endl;
-            break;
-    }
     switch (dir[1])
     {
         case 'u':
-            posY = targetBox2.y - destRect2.h;
+            posY = targetBoxV.y - destRect.h;
             //std::cout << "u" << std::endl;
             break;
         
         case 'd':
-            posY = targetBox2.y + targetBox2.h;
+            posY = targetBoxV.y + targetBoxV.h;
             //std::cout << "d" << std::endl;
+            break;
+    }
+    switch (dir[0])
+    {
+        case 'l':
+            posX = targetBoxH.x - destRect.w;
+            //std::cout << "l" << std::endl;
+            break;
+        
+        case 'r':
+            posX = targetBoxH.x + targetBoxH.w;
+            //std::cout << "r" << std::endl;
             break;
     }
 

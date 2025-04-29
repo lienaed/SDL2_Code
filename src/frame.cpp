@@ -143,7 +143,7 @@ void Frame::update()
     }
 
     //Map Collision Detect
-    std::array <char, 5> CollInfo = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), m->getMap())
+    std::array <char, 5> CollInfo = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), m->getMap());
     result[0] = CollInfo[0];
     result[1] = CollInfo[1];
     result[2] = CollInfo[2];
