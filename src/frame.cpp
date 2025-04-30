@@ -51,7 +51,7 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
         //Objects Initialization
         objectManager.addObject (new Map ("Level1", "Map", "assets/Maps/Level1.json"));
         objectManager.addObject (new Player ("Player", "Friendly", "assets/Knight.png", 0, 0, 64, 64));
-        objectManager.addObject (new Shell ("Shell", "Enimy", "assets/Shell.png", 300, winH, 64, 64));
+        objectManager.addObject (new Shell ("Shell", "Enimy", "assets/Shell.png", 300, 0, 64, 64));
 
         //Clear event
         SDL_Event dump;
@@ -89,30 +89,6 @@ void Frame::event()
 
 }
 
-// //Update
-// void Frame::update()
-// {
-//     objectManager.updateAll();
-
-//     std::array <char, 3> result; 
-//     auto* p = objectManager.findObject ("Player");
-//     // auto* m = objectManager.findObject ("Level1");
-//     // Map* map = dynamic_cast <Map*> (m);
-//     // result = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), map->getMap());
-
-//     for (auto* o : objectManager.findObjectType ("Enimy"))
-//     {
-//         result = CollisionManager::Collision (p->getHitbox(), o->getHitbox(), p->getLastDest(), o->getLastDest());
-
-//         if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
-//         {
-//             if (Player* player = dynamic_cast <Player*> (p))
-//                 player->onCollision(result, o);
-//         }
-//     }
-    
-//     InputManager::flush();
-// }
 
 //Update
 void Frame::update()
@@ -132,15 +108,26 @@ void Frame::update()
         return;
 
     //Enimy Collision Detect
-    for (auto* e : objectManager.findObjectType ("Enimy"))
-    {
-        result = CollisionManager::Collision (p->getHitbox(), e->getHitbox(), p->getLastDest(), e->getLastDest());
+    // for (auto* e : objectManager.findObjectType ("Enimy"))
+    // {
+    //     result = CollisionManager::Collision (p->getHitbox(), e->getHitbox(), p->getLastDest(), e->getLastDest());
 
-        if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
-        {
-            p->onCollision(result, e, -1, -1);
-        }
-    }
+    //     if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
+    //     {
+    //         p->onCollision(result, e, -1, -1);
+    //     }
+
+    //     //Map Collision Detect
+    //     std::array <char, 5> CollInfo = CollisionManager::MapCollision (e->getHitbox(), e->getLastDest(), m->getMap());
+    //     result[0] = CollInfo[0];
+    //     result[1] = CollInfo[1];
+    //     result[2] = CollInfo[2];
+    //     int cCheck = (int)CollInfo[3];
+    //     int rCheck = (int)CollInfo[4];
+
+    //     if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
+    //         e->onCollision (result, m, cCheck, rCheck);
+    // }
 
     //Map Collision Detect
     std::array <char, 5> CollInfo = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), m->getMap());
@@ -157,6 +144,51 @@ void Frame::update()
     //Clean InputManager Events
     InputManager::flush();
 }
+
+// //Update
+// void Frame::update()
+// {
+//     objectManager.updateAll();
+
+//     //Collision Update
+//     std::array <char, 3> result; 
+//     auto* p = objectManager.findObject ("Player");
+//     auto* mapObj = objectManager.findObject ("Level1");
+//     Map* m = dynamic_cast <Map*> (mapObj);
+
+//     std::vector <GameObject*> enimies = objectManager.findObjectType ("Enimy");
+//     std::vector <GameObject*> characters = objectManager.findObjectType ("Friendly");
+//     std::vector <GameObject*> entities = enimies;
+//     entities.insert (entities.end(), characters.begin(), characters.end());
+    
+//     //Map Collision Detect
+//     for (auto* e : characters)
+//     {
+//         std::array <char, 5> CollInfo = CollisionManager::MapCollision (e->getHitbox(), e->getLastDest(), m->getMap());
+//         result[0] = CollInfo[0];
+//         result[1] = CollInfo[1];
+//         result[2] = CollInfo[2];
+//         int cCheck = (int)CollInfo[3];
+//         int rCheck = (int)CollInfo[4];
+
+//         if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
+//             e->onCollision (result, m, cCheck, rCheck);
+//     }
+
+//     //Enimy Collision Detect
+//     for (auto* e : entities)
+//     {
+//         result = CollisionManager::Collision (p->getHitbox(), e->getHitbox(), p->getLastDest(), e->getLastDest());
+
+//         if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
+//         {   
+//             p->onCollision(result, e, -1, -1);
+//         }
+//     }
+
+//     //Clean InputManager Events
+//     InputManager::flush();
+// }
 
 //Render
 void Frame::render()

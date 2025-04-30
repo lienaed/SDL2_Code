@@ -12,6 +12,7 @@ class GameObject
         const double G = 0.3;
         double posX, posY;
         double vX, vY;
+        int moveState = 0;
 
     public:
         std::string name;
@@ -24,11 +25,12 @@ class GameObject
         virtual void draw();
         virtual void move(int x, int y);
         
+        virtual void onCollision(std::array <char, 3> dir, GameObject* target, int cCheck, int rCheck);
+
         virtual SDL_Rect getLastDest()
         {
             return lastDest;
         }
-
         virtual SDL_Rect getRect()
         {
             return destRect;
@@ -36,5 +38,14 @@ class GameObject
         virtual SDL_Rect getHitbox()
         {
             return hitbox;
+        }
+        
+        virtual std::string getTag ()
+        {
+            return tag;
+        }
+        virtual std::string getName ()
+        {
+            return name;
         }
 };
