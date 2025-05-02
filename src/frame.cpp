@@ -93,6 +93,9 @@ void Frame::event()
 //Update
 void Frame::update()
 {
+    timer++;
+    std::cout << timer << std::endl;
+
     objectManager.updateAll();
 
     //Collision Update
@@ -108,26 +111,26 @@ void Frame::update()
         return;
 
     //Enimy Collision Detect
-    // for (auto* e : objectManager.findObjectType ("Enimy"))
-    // {
-    //     result = CollisionManager::Collision (p->getHitbox(), e->getHitbox(), p->getLastDest(), e->getLastDest());
+    for (auto* e : objectManager.findObjectType ("Enimy"))
+    {
+        result = CollisionManager::Collision (p->getHitbox(), e->getHitbox(), p->getLastDest(), e->getLastDest());
 
-    //     if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
-    //     {
-    //         p->onCollision(result, e, -1, -1);
-    //     }
+        if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
+        {
+            p->onCollision(result, e, -1, -1);
+        }
 
-    //     //Map Collision Detect
-    //     std::array <char, 5> CollInfo = CollisionManager::MapCollision (e->getHitbox(), e->getLastDest(), m->getMap());
-    //     result[0] = CollInfo[0];
-    //     result[1] = CollInfo[1];
-    //     result[2] = CollInfo[2];
-    //     int cCheck = (int)CollInfo[3];
-    //     int rCheck = (int)CollInfo[4];
+        //Map Collision Detect
+        std::array <char, 5> CollInfo = CollisionManager::MapCollision (e->getHitbox(), e->getLastDest(), m->getMap());
+        result[0] = CollInfo[0];
+        result[1] = CollInfo[1];
+        result[2] = CollInfo[2];
+        int cCheck = (int)CollInfo[3];
+        int rCheck = (int)CollInfo[4];
 
-    //     if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
-    //         e->onCollision (result, m, cCheck, rCheck);
-    // }
+        if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
+            e->onCollision (result, m, cCheck, rCheck);
+    }
 
     //Map Collision Detect
     std::array <char, 5> CollInfo = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), m->getMap());
@@ -139,6 +142,11 @@ void Frame::update()
 
     if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
         p->onCollision (result, m, cCheck, rCheck);
+
+    if (result[1] == 'u')
+        p->moveState = 1;
+    else
+        p->moveState = 0;
 
 
     //Clean InputManager Events

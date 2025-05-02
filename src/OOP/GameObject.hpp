@@ -12,11 +12,12 @@ class GameObject
         const double G = 0.3;
         double posX, posY;
         double vX, vY;
-        int moveState = 0;
+
 
     public:
         std::string name;
         std::string tag;
+        int moveState = 0;
 
         GameObject(const std::string& Name, const std::string& Tag, const char* file, int xpos, int ypos, int destW, int destH);
         ~GameObject();

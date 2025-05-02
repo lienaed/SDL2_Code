@@ -54,40 +54,38 @@ void GameObject::onCollision(std::array <char, 3> dir, GameObject* target, int c
         targetBoxH = m->getTileBox (cCheck, 0);
         targetBoxV = m->getTileBox (0, rCheck);
         std::cout << "Map Collision.";
-    }
+    }   
 
-    std::cout << dir[0] << ' ' << dir[1] << ' ' << dir[2] << std::endl;
+    std::cout << dir[0] << ' ' << dir[1] << ' ' << dir[2] << ' ' << this->moveState << std::endl;
     
     switch (dir[1])
     {
         case 'u':
-            moveState = 1;
             vY = 0;
-            posY = targetBoxV.y - destRect.h;
+            posY = targetBoxV.y - destRect.h + 1;
             //std::cout << "u" << std::endl;
             break;
         
         case 'd':
             vY = 0;
-            posY = targetBoxV.y + targetBoxV.h;
+            posY = targetBoxV.y + targetBoxV.h - 1;
             //std::cout << "d" << std::endl;
             break;
         
         case 'n':
-            moveState = 0;
             break;
     }
     switch (dir[0])
     {
         case 'l':
             vX = 0;
-            posX = targetBoxH.x - destRect.w;
+            posX = targetBoxH.x - destRect.w + 1;
             //std::cout << "l" << std::endl;
             break;
         
         case 'r':
             vX = 0;
-            posX = targetBoxH.x + targetBoxH.w;
+            posX = targetBoxH.x + targetBoxH.w - 1;
             //std::cout << "r" << std::endl;
             break;
     }

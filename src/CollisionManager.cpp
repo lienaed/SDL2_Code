@@ -1,5 +1,6 @@
 #include "CollisionManager.hpp"
 
+
 std::array <char, 3> CollisionManager::Collision(const SDL_Rect& box1, const SDL_Rect& box2, const SDL_Rect& lastDest1, const SDL_Rect& lastDest2)
 {
     std::array <char, 3> result = {'n', 'n', 'n'};
@@ -26,6 +27,7 @@ std::array <char, 3> CollisionManager::Collision(const SDL_Rect& box1, const SDL
             result[1] = lastDest1.y < lastDest2.y ? 'u' : 'd';
         }
     }
+    
 
     return result;
 }
@@ -76,7 +78,9 @@ std::array <char, 5> CollisionManager::MapCollision (const SDL_Rect& box, const 
             else if (map[r][c].second == 2)
                 result[2] = 'w';
         }
-    }        
+    }
+
+
     result[3] = (char)cCheck;
     result[4] = (char)rCheck;
     return result;

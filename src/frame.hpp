@@ -31,4 +31,5 @@ class Frame
     private:
         bool running = 1;
         SDL_Window *window;
+        int timer = 0;
 };

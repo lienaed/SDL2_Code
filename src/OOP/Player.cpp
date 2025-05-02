@@ -3,6 +3,8 @@
 
 void Player::update()
 {
+    std::cout << destRect.x << ' ' << destRect.y << std::endl;
+
     lastDest = destRect;
 
     handelEvent();
@@ -11,6 +13,7 @@ void Player::update()
     move(posX, posY);
 
     hitbox = destRect;
+    std::cout << destRect.x << ' ' << destRect.y << std::endl;
 }
 
 //Process Inputs
@@ -32,6 +35,7 @@ void Player::handelEvent()
 //Movements
     void Player::jump()
     {
+        std::cout << "Jump." << std::endl;
         vY = 10;
     }
 
@@ -52,29 +56,30 @@ void Player::handelEvent()
         vX = 5;
         posX -= vX;
     }
-
-    void Player::correction()
-    {
-        if (posY < 0)
-        {
-            posY = 0;
-            vY = 0;
-        }
-        else if (posY > Frame::winH - destRect.h)
-        {
-            vY = 0;
-            posY = Frame::winH - destRect.h;
-        }
-
-        if (posX < 0)
-        {
-            posX = 0;
-            vX = 0;
-        }
-        else if (posX > Frame::winW - destRect.w)
-        {
-            posX = Frame::winW - destRect.w;
-            vX = 0;
-        }
-    }
 //End Movements
+
+
+void Player::correction()
+{
+    if (posY < 0)
+    {
+        posY = 0;
+        vY = 0;
+    }
+    else if (posY > Frame::winH - destRect.h)
+    {
+        vY = 0;
+        posY = Frame::winH - destRect.h;
+    }
+
+    if (posX < 0)
+    {
+        posX = 0;
+        vX = 0;
+    }
+    else if (posX > Frame::winW - destRect.w)
+    {
+        posX = Frame::winW - destRect.w;
+        vX = 0;
+    }
+}
