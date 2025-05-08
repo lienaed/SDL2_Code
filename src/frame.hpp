@@ -32,4 +32,5 @@ class Frame
         bool running = 1;
         SDL_Window *window;
         int timer = 0;
+        bool jumpEnimy = 0, jumpMap = 0;
 };

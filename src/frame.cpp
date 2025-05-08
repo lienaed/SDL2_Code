@@ -49,9 +49,13 @@ void Frame::init(const char* title, int x, int y, int w, int h, bool fullscreen)
         SDL_GetWindowSize (window, &winW, &winH);
 
         //Objects Initialization
-        objectManager.addObject (new Map ("Level1", "Map", "assets/Maps/Level1.json"));
-        objectManager.addObject (new Player ("Player", "Friendly", "assets/Knight.png", 0, 0, 64, 64));
-        objectManager.addObject (new Shell ("Shell", "Enimy", "assets/Shell.png", 300, 0, 64, 64));
+            //Maps
+            objectManager.addObject (new Map ("Level1", "Map", "assets/Maps/Level1.json"));
+
+            
+            //Enitities
+            objectManager.addObject (new Player ("Player", "Friendly", "assets/Knight.png", 0, 0, 64, 64));
+            objectManager.addObject (new Shell ("Shell", "Enimy", "assets/Shell.png", 300, 0, 64, 64));
 
         //Clear event
         SDL_Event dump;
@@ -118,6 +122,10 @@ void Frame::update()
         if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
         {
             p->onCollision(result, e, -1, -1);
+            if (result[1] == 'u')
+                jumpEnimy = 1;
+            else
+                jumpEnimy = 0;
         }
 
         //Map Collision Detect
@@ -144,6 +152,12 @@ void Frame::update()
         p->onCollision (result, m, cCheck, rCheck);
 
     if (result[1] == 'u')
+        jumpMap = 1;
+    else
+        jumpMap = 0;
+    
+
+    if (jumpEnimy || jumpMap)
         p->moveState = 1;
     else
         p->moveState = 0;
@@ -153,50 +167,6 @@ void Frame::update()
     InputManager::flush();
 }
 
-// //Update
-// void Frame::update()
-// {
-//     objectManager.updateAll();
-
-//     //Collision Update
-//     std::array <char, 3> result; 
-//     auto* p = objectManager.findObject ("Player");
-//     auto* mapObj = objectManager.findObject ("Level1");
-//     Map* m = dynamic_cast <Map*> (mapObj);
-
-//     std::vector <GameObject*> enimies = objectManager.findObjectType ("Enimy");
-//     std::vector <GameObject*> characters = objectManager.findObjectType ("Friendly");
-//     std::vector <GameObject*> entities = enimies;
-//     entities.insert (entities.end(), characters.begin(), characters.end());
-    
-//     //Map Collision Detect
-//     for (auto* e : characters)
-//     {
-//         std::array <char, 5> CollInfo = CollisionManager::MapCollision (e->getHitbox(), e->getLastDest(), m->getMap());
-//         result[0] = CollInfo[0];
-//         result[1] = CollInfo[1];
-//         result[2] = CollInfo[2];
-//         int cCheck = (int)CollInfo[3];
-//         int rCheck = (int)CollInfo[4];
-
-//         if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
-//             e->onCollision (result, m, cCheck, rCheck);
-//     }
-
-//     //Enimy Collision Detect
-//     for (auto* e : entities)
-//     {
-//         result = CollisionManager::Collision (p->getHitbox(), e->getHitbox(), p->getLastDest(), e->getLastDest());
-
-//         if (result[0] != 'n' || result[1] != 'n' || result[2] != 'n')
-//         {   
-//             p->onCollision(result, e, -1, -1);
-//         }
-//     }
-
-//     //Clean InputManager Events
-//     InputManager::flush();
-// }
 
 //Render
 void Frame::render()

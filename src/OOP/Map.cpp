@@ -51,6 +51,46 @@ std::vector <std::vector <std::pair<int, int>>> Map::loadMap(const char* path)
     return map;
 }
 
+std::vector <SDL_Rect> Map::makeHitbox()
+{
+    int r = 0, c = 0;
+    int rEnd = 0, cEnd = 0;
+    int type;
+    while (true)
+    {
+        type = map[r][c].second;
+        for (int i = c; i < map[0].size(); i++)
+        {
+            if (map[r][i].second != type)
+                break;
+            cEnd = i;
+        }
+        for (int i = r + 1; i < map.size(); i++)
+        {                
+            int stop = 0;
+
+            for (int u = c; u <= cEnd; u++)
+            {
+                if (map[i][u].second != type)
+                {
+                    stop = 1;
+                    break;
+                }
+            }
+            rEnd = i - 1;
+
+            if (stop)
+                break;
+        }
+        hitboxSet.emplace_back ({c * 32, r * 32, (cEnd - c + 1) * 32, (rEnd - r + 1) * 32});
+
+        c = cEnd == map[0].size() - 1 ? 0 : cEnd + 1;
+        r = cEnd == map[0].size() - 1 ? rEnd + 1 : rEnd;
+        if (cEnd == map[0].size() - 1 && rEnd == map.size() - 1)
+            break;
+    }
+}
+
 //Initialize map
 Map::Map (const std::string& name, const std::string& tag, const char* file)
     : GameObject (name, tag, file, 0, 0, 32, 32)
@@ -60,12 +100,13 @@ Map::Map (const std::string& name, const std::string& tag, const char* file)
     destRect.w = destRect.h = 32;
 
     map = loadMap(file);
+    hitboxSet = makeHitbox();
 }
 
 //Add texture
-void Map::addChunk (const char* file, int num)
+void Map::addChunk (const char* file, int label)
 {
-    chunks[num] = TextureManager::LoadTexture (file);
+    chunks[label] = TextureManager::LoadTexture (file);
 }
 
 //Draw map
