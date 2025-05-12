@@ -56,38 +56,50 @@ std::vector <SDL_Rect> Map::makeHitbox()
     int r = 0, c = 0;
     int rEnd = 0, cEnd = 0;
     int type;
-    while (true)
+    while (r < map.size())
     {
         type = map[r][c].second;
+
         for (int i = c; i < map[0].size(); i++)
         {
             if (map[r][i].second != type)
+            {
+                cEnd = i - 1;
                 break;
+            }
             cEnd = i;
         }
-        for (int i = r + 1; i < map.size(); i++)
-        {                
-            int stop = 0;
-
-            for (int u = c; u <= cEnd; u++)
+        for (int u = r; u < map.size(); u++)
+        {
+            for (int i = c + 1; i <= cEnd; i++)
             {
-                if (map[i][u].second != type)
+                if (map[u][i].second != type)
                 {
-                    stop = 1;
-                    break;
+                    rEnd = u - 1;
+                    goto out;
                 }
             }
-            rEnd = i - 1;
-
-            if (stop)
-                break;
+            rEnd = u;
         }
-        hitboxSet.emplace_back ({c * 32, r * 32, (cEnd - c + 1) * 32, (rEnd - r + 1) * 32});
+        out:
 
-        c = cEnd == map[0].size() - 1 ? 0 : cEnd + 1;
-        r = cEnd == map[0].size() - 1 ? rEnd + 1 : rEnd;
-        if (cEnd == map[0].size() - 1 && rEnd == map.size() - 1)
-            break;
+        hitboxSet.emplace_back ({
+                c * 32,
+                r * 32,
+                (cEnd - c + 1) * 32,
+                (rEnd - r + 1) * 32
+            });
+
+        if (cEnd == map[0].size() - 1)
+        {
+            if (rEnd == map.size() - 1)
+                break;
+
+            c = 0;
+            r = rEnd + 1;
+        }
+        else
+            c = cEnd + 1;
     }
 }
 
