@@ -2,6 +2,13 @@
 
 #include "GameObject.hpp"
 
+struct Tile 
+{
+    int texture;
+    int type;
+    int hitbox;
+    Tile (int t, int y, int h) : texture(t), type(y), hitbox(h) {};
+};
 
 class Map : public GameObject
 {
@@ -11,7 +18,7 @@ class Map : public GameObject
         
         void addChunk (const char* file, int label);
         void draw() override;
-        const std::vector <std::vector <std::pair<int, int>>>& getMap() const
+        const std::vector <std::vector <Tile>>& getMap() const
         {
             return map;
         }
@@ -20,16 +27,16 @@ class Map : public GameObject
             SDL_Rect tile = {c*32, r*32, 32, 32};
             return tile;
         }
-        const std::vector <SDL_Rect> getHitboxSet()
+        const std::vector <SDL_Rect>& getHitbox() const override
         {
             return hitboxSet;
         }
 
     protected:
         std::vector <SDL_Texture*> chunks;
-        std::vector <std::vector <std::pair<int, int>>> map;
+        std::vector <std::vector <Tile>> map;
         std::vector <SDL_Rect> hitboxSet;
 
-        std::vector <std::vector <std::pair<int, int>>> loadMap(const char* path);
+        std::vector <std::vector <Tile>> loadMap(const char* path);
         std::vector <SDL_Rect> makeHitbox();
 }; 

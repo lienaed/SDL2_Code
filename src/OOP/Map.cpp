@@ -4,12 +4,12 @@
 using json = nlohmann::json;
 
 //Load map from JSON
-std::vector <std::vector <std::pair<int, int>>> Map::loadMap(const char* path)
+std::vector <std::vector <Tile>> Map::loadMap(const char* path)
 {
     std::ifstream file (path);
     json data;
     file >> data;
-    std::vector <std::vector <std::pair<int, int>>> map;
+    std::vector <std::vector <Tile>> map;
     std::map<int, bool> material;
 
     //Load Textures
@@ -39,10 +39,10 @@ std::vector <std::vector <std::pair<int, int>>> Map::loadMap(const char* path)
     //Read Map
     for (const auto& row : data["tiles"])
     {
-        std::vector <std::pair<int, int>> mapRow;
+        std::vector <Tile> mapRow;
         for (const auto& tile : row)
         {
-            mapRow.emplace_back ((tile), material[tile]);
+            mapRow.emplace_back ((tile), material[tile], -1);
         }
         map.emplace_back (mapRow);
     }
@@ -51,18 +51,20 @@ std::vector <std::vector <std::pair<int, int>>> Map::loadMap(const char* path)
     return map;
 }
 
+//Create Hitbox Chunks
 std::vector <SDL_Rect> Map::makeHitbox()
 {
+    std::vector <SDL_Rect> set;
     int r = 0, c = 0;
     int rEnd = 0, cEnd = 0;
     int type;
     while (r < map.size())
     {
-        type = map[r][c].second;
-
+        type = map[r][c].type;
+        
         for (int i = c; i < map[0].size(); i++)
         {
-            if (map[r][i].second != type)
+            if (map[r][i].type != type)
             {
                 cEnd = i - 1;
                 break;
@@ -71,19 +73,20 @@ std::vector <SDL_Rect> Map::makeHitbox()
         }
         for (int u = r; u < map.size(); u++)
         {
-            for (int i = c + 1; i <= cEnd; i++)
+            for (int i = c; i <= cEnd; i++)
             {
-                if (map[u][i].second != type)
+                if (map[u][i].type != type)
                 {
                     rEnd = u - 1;
                     goto out;
                 }
+                map[u][i].hitbox = set.size();
             }
             rEnd = u;
         }
         out:
 
-        hitboxSet.emplace_back ({
+        set.push_back ({
                 c * 32,
                 r * 32,
                 (cEnd - c + 1) * 32,
@@ -101,6 +104,7 @@ std::vector <SDL_Rect> Map::makeHitbox()
         else
             c = cEnd + 1;
     }
+    return set;
 }
 
 //Initialize map
@@ -130,7 +134,7 @@ void Map::draw()
         for (int c = 0; c < map[0].size(); c++)
         {
             destRect.x = c * 32;
-            SDL_RenderCopy (Frame::renderer, chunks[map[r][c].first], &srcRect, &destRect);
+            SDL_RenderCopy (Frame::renderer, chunks[map[r][c].texture], &srcRect, &destRect);
         }
     }
 }
