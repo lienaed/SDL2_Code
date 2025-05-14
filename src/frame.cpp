@@ -129,7 +129,7 @@ void Frame::update()
         }
 
         //Map Collision Detect
-        std::array <char, 5> CollInfo = CollisionManager::MapCollision (e->getHitbox(), e->getLastDest(), m->getHitbox());
+        std::array <char, 5> CollInfo = CollisionManager::MapCollision (e->getHitbox(), e->getLastDest(), m);
         result[0] = CollInfo[0];
         result[1] = CollInfo[1];
         result[2] = CollInfo[2];
@@ -141,7 +141,7 @@ void Frame::update()
     }
 
     //Map Collision Detect
-    std::array <char, 5> CollInfo = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), m->getHitbox());
+    std::array <char, 5> CollInfo = CollisionManager::MapCollision (p->getHitbox(), p->getLastDest(), m);
     result[0] = CollInfo[0];
     result[1] = CollInfo[1];
     result[2] = CollInfo[2];

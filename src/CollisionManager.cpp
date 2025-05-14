@@ -33,14 +33,15 @@ std::array <char, 3> CollisionManager::Collision(const SDL_Rect& box1, const SDL
 }
 
 //Map Collision
-std::array <char, 5> CollisionManager::MapCollision (const SDL_Rect& box, const SDL_Rect& lastDest, 
-    std::vector <SDL_Rect> hitboxSet)
+std::array <char, 5> CollisionManager::MapCollision (const SDL_Rect& box, const SDL_Rect& lastDest, Map* m)
 {
     std::array <char, 5> result = {'n', 'n', 'n'};
     int lBlock = std::max (0, box.x / 32), rBlock = std::min((box.x + box.w - 1) / 32, (int)map[0].size() - 1);
     int uBlock = std::max (0, box.y / 32), dBlock = std::min ((box.y + box.h - 1) / 32, (int)map.size() - 1);
     int xCheck = -1, yCheck = -1;
 
+    std::vector <SDL_Rect> hitboxSet = m->getHitbox();
+    std::vector <std::vector <Tile>> map = m->getMap();
     std::vector <int> nearHitboxIndex;
 
     for (int r = uBlock; r <= dBlock; r++)
@@ -87,7 +88,7 @@ std::array <char, 5> CollisionManager::MapCollision (const SDL_Rect& box, const 
             if (yCheck == -1 || hitboxSet[i].y > yCheck)
                 yCheck = hitboxSet[i].y;
         }    
-        else if (hitboxSet[i].type == 2)
+        else if (tmp[i].type == 2)
             result[2] = 'w';
     }
 
