@@ -27,7 +27,7 @@ class Map : public GameObject
             SDL_Rect tile = {c*32, r*32, 32, 32};
             return tile;
         }
-        const std::vector <SDL_Rect>& getHitbox() const override
+        const std::vector <SDL_Rect>& getHitbox() const
         {
             return hitboxSet;
         }
