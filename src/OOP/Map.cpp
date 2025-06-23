@@ -20,7 +20,12 @@ std::vector <std::vector <Tile>> Map::loadMap(const char* path)
         addChunk(path["path"].get <std::string>().c_str(), id);
 
         std::string tag = path["tag"].get <std::string>();
-        if (tag == "solid")
+        
+        if (tag == "gas")
+        {
+            material[id] = 0;
+        }
+        else if (tag == "solid")
         {
             material[id] = 1;
         }
@@ -28,11 +33,6 @@ std::vector <std::vector <Tile>> Map::loadMap(const char* path)
         {
             material[id] = 2;
         }
-        else if (tag == "gas")
-        {
-            material[id] = 0;
-        }
-
         id++;
     }
 

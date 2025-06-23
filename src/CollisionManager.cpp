@@ -53,7 +53,8 @@ std::array <char, 5> CollisionManager::MapCollision (const SDL_Rect& box, const 
                 if (i == map[r][c].hitbox)
                     goto out;
             }
-            nearHitboxIndex.emplace_back (map[r][c].hitbox);
+            if (map[r][c] != 0)
+                nearHitboxIndex.emplace_back (map[r][c].hitbox);
             out:
         }
     }
@@ -87,8 +88,9 @@ std::array <char, 5> CollisionManager::MapCollision (const SDL_Rect& box, const 
             result[1] = tmp[1];
             if (yCheck == -1 || hitboxSet[i].y > yCheck)
                 yCheck = hitboxSet[i].y;
-        }    
-        else if (map == 2)
+        }
+
+        if (map == 2)
             result[2] = 'w';
     }
 
