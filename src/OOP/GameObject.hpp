@@ -17,7 +17,7 @@ class GameObject
     public:
         std::string name;
         std::string tag;
-        int moveState = 0;
+        int jumpState = 0;
 
         GameObject(const std::string& Name, const std::string& Tag, const char* file, int xpos, int ypos, int destW, int destH);
         ~GameObject();

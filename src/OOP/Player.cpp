@@ -19,7 +19,7 @@ void Player::update()
 //Process Inputs
 void Player::handelEvent()
 {
-    if (moveState == 1)
+    if (jumpState == 1)
     {
         if (InputManager::keyPress (SDL_SCANCODE_SPACE))
             jump();

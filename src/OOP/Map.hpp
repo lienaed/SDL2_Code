@@ -18,15 +18,18 @@ class Map : public GameObject
         
         void addChunk (const char* file, int label);
         void draw() override;
+
         const std::vector <std::vector <Tile>>& getMap() const
         {
             return map;
         }
+
         static SDL_Rect getTileBox(int c, int r)
         {
             SDL_Rect tile = {c*32, r*32, 32, 32};
             return tile;
         }
+        
         const std::vector <SDL_Rect>& getHitbox() const
         {
             return hitboxSet;

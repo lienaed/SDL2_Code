@@ -56,7 +56,7 @@ void GameObject::onCollision(std::array <char, 3> dir, GameObject* target, int c
         std::cout << "Map Collision.";
     }   
 
-    std::cout << dir[0] << ' ' << dir[1] << ' ' << dir[2] << ' ' << this->moveState << std::endl;
+    std::cout << dir[0] << ' ' << dir[1] << ' ' << dir[2] << ' ' << this->jumpState << std::endl;
     
     switch (dir[1])
     {

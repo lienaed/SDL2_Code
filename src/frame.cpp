@@ -123,9 +123,9 @@ void Frame::update()
         {
             p->onCollision(result, e, -1, -1);
             if (result[1] == 'u')
-                jumpEnimy = 1;
+                onEnimy = 1;
             else
-                jumpEnimy = 0;
+                onEnimy = 0;
         }
 
         //Map Collision Detect
@@ -152,15 +152,15 @@ void Frame::update()
         p->onCollision (result, m, cCheck, rCheck);
 
     if (result[1] == 'u')
-        jumpMap = 1;
+        onFloor = 1;
     else
-        jumpMap = 0;
+        onFloor = 0;
     
 
-    if (jumpEnimy || jumpMap)
-        p->moveState = 1;
+    if (onEnimy || onFloor)
+        p->jumpState = 1;
     else
-        p->moveState = 0;
+        p->jumpState = 0;
 
 
     //Clean InputManager Events
