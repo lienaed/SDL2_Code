@@ -1,0 +1,8 @@
+Add Macro in Mac:
+    chmod +x file //Give permission
+    ls -l file //Check permission
+    -rwxr-xr-x //Avaliable output
+    -rw-r--r-- //Unavailable output
+
+CollisionManager mapCollsion: change tiles into obstacle
+onCollision: u/d logic update
